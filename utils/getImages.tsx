@@ -1,0 +1,31 @@
+const socket_on = require('../assets/Images/socket_on.png');
+const socket_off = require('../assets/Images/socket_off.png');
+const air_on = require('../assets/Images/air_on.png');
+const air_off = require('../assets/Images/air_off.png');
+const light_on = require('../assets/Images/light_on.png');
+const light_off = require('../assets/Images/light_off.png');
+const computer_on = require('../assets/Images/computer_on.png');
+const computer_off = require('../assets/Images/computer_off.png');
+const fan_on = require('../assets/Images/fan_on.png');
+const fan_off = require('../assets/Images/fan_off.png');
+const arrowSearch = require('../assets/Images/arrowSearch.png');
+const searchIcon = require('../assets/Images/search.png');
+const closeIcon = require('../assets/Images/close.png');
+
+const images = {
+    socket_on :require('../assets/Images/socket_on.png'),
+    socket_off :require('../assets/Images/socket_off.png'),
+    air_on :require('../assets/Images/air_on.png'),
+    air_off :require('../assets/Images/air_off.png'),
+    light_on :require('../assets/Images/light_on.png'),
+    light_off :require('../assets/Images/light_off.png'),
+    computer_on :require('../assets/Images/computer_on.png'),
+    computer_off :require('../assets/Images/computer_off.png'),
+    fan_on :require('../assets/Images/fan_on.png'),
+    fan_off :require('../assets/Images/fan_off.png'),
+    arrowSearch :require('../assets/Images/arrowSearch.png'),
+    searchIcon :require('../assets/Images/search.png'),
+    closeIcon :require('../assets/Images/close.png')   
+}
+
+export {images};
