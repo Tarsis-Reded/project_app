@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Modal, Alert, Pressable, FlatList, SafeAreaView, StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { data, rooms, roomsHouse, devices, devicesOptions } from '../utils/getData';
+import { data, rooms } from '../utils/getData';
 import { images } from '../utils/getImages';
 import SelectDropdown from 'react-native-select-dropdown';
 import { SelectList } from 'react-native-dropdown-select-list';
 import AppLoading from 'expo-app-loading';
-import ToggleSwitch from 'toggle-switch-react-native'
+import ToggleSwitch from 'toggle-switch-react-native';
+import ModalC from '../components/modal';
 // const dataRooms = rooms.dataRooms;
 
 import {
@@ -17,8 +18,8 @@ import {
 
 export default function App({ navigation }) {
   let devices = rooms.dataRooms
-  .filter(room => Object.keys(room)[0] === selectedRoom)
-  .map(room => Object.values(room)[0]);
+    .filter(room => Object.keys(room)[0] === selectedRoom)
+    .map(room => Object.values(room)[0]);
   const [selected, setSelected] = useState("");
   const [selectedRoom, setSelectedRoom] = useState('Quarto');
   const [modalVisible, setModalVisible] = useState(false);
@@ -26,28 +27,26 @@ export default function App({ navigation }) {
   const [deviceResults, setDeviceResults] = useState(devices[0]);
   const [roomsSearch, RoomsSearch] = useState(rooms.dataRooms);
   const [roomsResults, RoomsResults] = useState(rooms.dataRooms);
- 
-  useEffect(() => {
-    devices = rooms.dataRooms
-    .filter(room => Object.keys(room)[0] === selectedRoom)
-    .map(room => Object.values(room)[0]);
-    setDeviceResults(devices[0]);
-    console.log(devices[0])
-    }, [selectedRoom])
-  
 
   useEffect(() => {
-    const datas = devices[0] //  TA DANDO ERRO AQUI 
-    console.log(devices[0])
-    console.log(deviceSearch)
+    devices = rooms.dataRooms
+      .filter(room => Object.keys(room)[0] === selectedRoom)
+      .map(room => Object.values(room)[0]);
+    setDeviceResults(devices[0]);
+    setDeviceSearch("");
+  }, [selectedRoom])
+
+  useEffect(() => {
+    devices = rooms.dataRooms
+      .filter(room => Object.keys(room)[0] === selectedRoom)
+      .map(room => Object.values(room)[0]);
+
     if (deviceSearch === 'all' || deviceSearch === '') {
-      setDeviceResults(datas);
+      setDeviceResults(devices[0]);
     } else {
-      console.log(devices)
-      // setDeviceResults(datas.filter((item) => {
-      //   console.log(deviceSearch)
-      //   return item.type === deviceSearch ? true : false;
-      // }))
+      setDeviceResults(devices[0].filter((item) => {
+        return item.type === deviceSearch ? true : false;
+      }))
     }
   }, [deviceSearch])
 
@@ -203,6 +202,7 @@ export default function App({ navigation }) {
           imagePath = item.state ? images.air_on : images.air_off
           break;
         case 'light':
+        case 'lamp':
           imagePath = item.state ? images.light_on : images.light_off
           break;
         case 'fan':
@@ -275,16 +275,8 @@ export default function App({ navigation }) {
           <View style={styles.centerRow}>
             <SelectDropdown
               data={data.roomsOptions}
-
-              // defaultValueByIndex={1} // use default value by index or default value
-              // defaultValue={'Canada'} // use default value by index or default value
-
-              onSelect={(selectedItem) => { setSelectedRoom(selectedItem) }}
-              // setSelectedRoom={setSelected}
-
+              onSelect={(selectedItem) => {setSelectedRoom(selectedItem.replace(/ /g, "_")) }}
               defaultValue={data.roomsOptions.find(room => room == selectedRoom)}
-              // defaultButtonText={'Selecione um cômodo'}
-
               buttonTextAfterSelection={(selectedItem) => {
                 return selectedItem;
               }}
@@ -323,6 +315,7 @@ export default function App({ navigation }) {
             <SelectList
               fontFamily={'Poppins_400Regular'}
               data={data.devicesOptions}
+              defaultOption={data.devicesOptions[0]}
               closeicon={
                 <Image
                   style={{ width: 15, resizeMode: 'contain', }}
@@ -342,10 +335,10 @@ export default function App({ navigation }) {
               placeholder='Buscar por dispositivo'
               notFoundText='Esse dispositivo não existe'
               onSelect={() => { 
-                // logar prop devices[0]
-                console.log("TEETETETE", devices[0])
+                console.log(selected)
                 setDeviceSearch(data?.devicesOptions[selected]?.type)
-               }} //function
+                console.log(data?.devicesOptions[selected]?.type)
+              }}
             />
 
           </View>
@@ -380,9 +373,6 @@ export default function App({ navigation }) {
     );
   }
 };
-
-
-
 
 
 const styles = StyleSheet.create({
