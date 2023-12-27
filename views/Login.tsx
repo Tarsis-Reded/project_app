@@ -55,7 +55,7 @@ const App: React.FC<AppProps> = () => {
           withHandle={true}
           
         >
-          <ModalC/>
+          {/* <ModalC/> */}
 
         </Modalize>
       </>

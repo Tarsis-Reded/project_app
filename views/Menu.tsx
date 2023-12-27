@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Modal, Alert, Pressable, FlatList, SafeAreaView, StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { data, rooms } from '../utils/getData';
@@ -7,7 +7,8 @@ import SelectDropdown from 'react-native-select-dropdown';
 import { SelectList } from 'react-native-dropdown-select-list';
 import AppLoading from 'expo-app-loading';
 import ToggleSwitch from 'toggle-switch-react-native';
-import ModalC from '../components/modal';
+import { Modalize } from 'react-native-modalize';
+import EditModal from '../components/modal';
 // const dataRooms = rooms.dataRooms;
 
 import {
@@ -16,7 +17,14 @@ import {
   Poppins_500Medium,
 } from '@expo-google-fonts/poppins';
 
-export default function App({ navigation }) {
+export default function App({navigation}) {
+  
+  const modalizeRef = useRef<Modalize>(null);
+
+  const onOpen = () => {
+    modalizeRef.current?.open();
+  };  
+
   let devices = rooms.dataRooms
     .filter(room => Object.keys(room)[0] === selectedRoom)
     .map(room => Object.values(room)[0]);
@@ -49,12 +57,7 @@ export default function App({ navigation }) {
       }))
     }
   }, [deviceSearch])
-
-
-
   // fazer um desse para o botão de habilitar 
-
-
   let [fontsLoaded] = useFonts({ Poppins_400Regular, Poppins_500Medium });
 
   if (!fontsLoaded) {
@@ -72,123 +75,6 @@ export default function App({ navigation }) {
     //           />
     //   </View>
     // );
-    const renderComModal = ({ item, open }) => {
-      console.log(item);
-      return <Modal
-        animationType="fade"
-        transparent={false}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
-          <View style={{
-            backgroundColor: '#EDEFF2', borderWidth: 1, borderColor: 'black', borderRadius: 20, alignSelf: 'center', shadowColor: 'black',
-            shadowOffset: { width: 0, height: 2, }, shadowOpacity: 0.25, shadowRadius: 4, elevation: 15
-          }}>
-            <View style={{ flexDirection: 'row', margin: 10, width: 330, height: 50 }}>
-              <View style={{ flex: 1 }}>
-                <Text style={{ flexDirection: "row", alignSelf: "center", paddingVertical: 12, fontFamily: 'Poppins_400Regular', fontSize: 18, color: 'black', left: 17 }}>
-                  Dispositivo
-                </Text>
-              </View>
-
-              <View style={{ width: 30, height: 30, justifyContent: 'flex-start', alignSelf: 'flex-start', alignItems: 'flex-end' }}>
-                <TouchableOpacity
-                  onPress={() => setModalVisible(!modalVisible)}>
-                  <Image source={require('../assets/Images/close.png')} style={{ width: 21, height: 21, resizeMode: 'contain' }} />
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View>
-              <Text style={{ alignSelf: "flex-start", fontFamily: 'Poppins_400Regular', fontSize: 17, color: 'black', left: 15 }}>
-                Nome:
-              </Text>
-              <TextInput
-                style={{ height: 40, marginLeft: 12, marginRight: 12, borderWidth: 1, borderRadius: 7, padding: 5, backgroundColor: 'white' }}
-                // onChangeText={onChangeText}
-                // placeholder="TESTE"
-                defaultValue={item.title}
-              // value={text}
-              // keyboardType="numeric"
-              // onChangeText={onChangeNumber}
-              />
-            </View>
-            <View style={{ paddingTop: 10 }}>
-              <Text style={{ alignSelf: "flex-start", fontFamily: 'Poppins_400Regular', fontSize: 17, color: 'black', left: 15 }}>
-                Comôdos:
-              </Text>
-              <SelectList
-                fontFamily={'Poppins_400Regular'}
-                data={data.roomsHouse}
-                closeicon={
-                  <Image
-                    style={{ width: 15, resizeMode: 'contain', }}
-                    source={require('../assets/Images/close.png')} />
-                }
-                searchicon={
-                  <Image
-                    style={{ width: 23, resizeMode: 'contain', }}
-                    source={require('../assets/Images/search.png')} />
-                }
-                arrowicon={<Text></Text>}
-                searchPlaceholder={''}
-                setSelected={setSelected}
-                defaultOption={data.roomsHouse.find(({ value }) => value === item.partHome)}    //deixar dinaminamico de acordo com o dispositivo
-                boxStyles={{ borderColor: 'black', borderWidth: 1, width: 320, height: 45, backgroundColor: 'white', justifyContent: 'center', alignSelf: 'center', borderRadius: 7 }}
-                // inputStyles={{ fontSize: 15, fontFamily: 'Poppins_400Regular', alignContent: 'center'}}
-                dropdownStyles={{ backgroundColor: 'white', width: 320, alignSelf: 'center' }}
-                placeholder='Buscar por dispositivo'
-                notFoundText='Esse dispositivo não existe'
-                onSelect={() => console.log(selected)}
-              />
-              <View style={{ paddingTop: 15, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', alignSelf: 'center', width: 320, height: 60 }}>
-                <View>
-                  <ToggleSwitch
-                    onColor="grey"
-                    offColor="#dedede"
-                    label="Habilitado: "
-                    labelStyle={{ fontFamily: 'Poppins_400Regular', fontSize: 17 }}
-                    isOn={true}
-                    onToggle={() => console.log(false)}
-                  />
-                </View>
-                <View style={{ padding: 10 }}>
-                  <ToggleSwitch
-                    onColor="grey"
-                    offColor="#dedede"
-                    labelStyle={{ fontFamily: 'Poppins_400Regular', fontSize: 17 }}
-                    label="Status: "
-                    isOn={false}
-                    onToggle={() => console.log(false)}
-                  />
-                </View>
-              </View>
-            </View>
-            <View style={{ paddingVertical: 8 }}>
-              <Text style={{ alignSelf: "flex-start", fontFamily: 'Poppins_400Regular', fontSize: 17, color: 'black', left: 15 }}>
-                Descrição:
-              </Text>
-              <TextInput
-                style={{ marginLeft: 12, marginRight: 12, borderWidth: 1, borderRadius: 7, padding: 5, height: 80, backgroundColor: 'white' }}
-                // onChangeText={onChangeText}
-                placeholder=""
-              // value={text}
-              // keyboardType="numeric"
-              // onChangeText={onChangeNumber}
-              />
-            </View>
-          </View>
-        </View>
-      </Modal>
-    }
-
-    function renderModal(item) {
-      setModalVisible(true)
-      console.log(modalVisible)
-
-    }
 
     const renderItem = ({ item }) => {
       let imagePath;
@@ -250,12 +136,7 @@ export default function App({ navigation }) {
               }}
             />
 
-            <TouchableOpacity
-
-              onPress={() => {
-                renderModal(item)
-                // setModalVisible(true) 
-              }}>
+            <TouchableOpacity onPress={onOpen}>
               <Image source={require('../assets/Images/edit.png')} style={{ width: 45, height: 30, resizeMode: 'contain' }} />
             </TouchableOpacity>
           </View>
@@ -265,9 +146,19 @@ export default function App({ navigation }) {
 
     return (
       <SafeAreaView style={{ padding: 10, paddingBottom: 10, paddingTop: inset.top, ...styles.container, backgroundColor: 'white' }}>
-        {/* Conteudo */}
-
-        {/* Nav bar */}
+        <Modalize ref={modalizeRef}
+          snapPoint={600}
+          
+          // HeaderComponent={
+          //   <View>
+          //     <Text>Header</Text>
+          //   </View>
+          // }
+          withHandle={true}
+          scrollViewProps={{showsHorizontalScrollIndicator: false, showsVerticalScrollIndicator: false}}
+        >
+          <EditModal item={deviceResults[0]}/>
+        </Modalize>
 
 
         <View style={{ flexDirection: "row", alignSelf: 'flex-end', paddingVertical: 12, justifyContent: 'flex-end', alignItems: 'center' }}>
@@ -275,7 +166,7 @@ export default function App({ navigation }) {
           <View style={styles.centerRow}>
             <SelectDropdown
               data={data.roomsOptions}
-              onSelect={(selectedItem) => {setSelectedRoom(selectedItem.replace(/ /g, "_")) }}
+              onSelect={(selectedItem) => { setSelectedRoom(selectedItem.replace(/ /g, "_")) }}
               defaultValue={data.roomsOptions.find(room => room == selectedRoom)}
               buttonTextAfterSelection={(selectedItem) => {
                 return selectedItem;
@@ -334,7 +225,7 @@ export default function App({ navigation }) {
               dropdownStyles={{ backgroundColor: 'white', width: 320, alignSelf: 'center' }}
               placeholder='Buscar por dispositivo'
               notFoundText='Esse dispositivo não existe'
-              onSelect={() => { 
+              onSelect={() => {
                 console.log(selected)
                 setDeviceSearch(data?.devicesOptions[selected]?.type)
                 console.log(data?.devicesOptions[selected]?.type)
@@ -355,7 +246,7 @@ export default function App({ navigation }) {
 
             <View style={{ flex: 1, paddingRight: 120 }}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Map', { id: 130 })}>
+                onPress={() => navigation.navigate('Login', {id: 110})}>
                 <Image source={require('../assets/Images/mapa.png')} style={styles.imageButtonDown} />
               </TouchableOpacity>
             </View>
@@ -368,7 +259,6 @@ export default function App({ navigation }) {
             </View>
           </View>
         </View>
-        {/* Nav bar */}
       </SafeAreaView>
     );
   }
