@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FlatList, SafeAreaView, StyleSheet, Text, Image, View, Dimensions, TouchableOpacity } from 'react-native';
+import { Modal, FlatList, SafeAreaView, StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, Pressable, Alert } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { data, rooms } from '../utils/getData';
 import { images } from '../utils/getImages';
@@ -9,6 +9,7 @@ import AppLoading from 'expo-app-loading';
 import ToggleSwitch from 'toggle-switch-react-native';
 import { Modalize } from 'react-native-modalize';
 import EditModal from '../components/modal';
+import styles from '../styles/styles';
 // const dataRooms = rooms.dataRooms;
 
 import {
@@ -17,50 +18,58 @@ import {
   Poppins_500Medium,
 } from '@expo-google-fonts/poppins';
 
-export default function App({navigation}) {
-  
+export default function App({ navigation }) {
+
   const modalizeRef = useRef<Modalize>(null);
 
   const onOpen = () => {
     modalizeRef.current?.open();
-  };  
-
-  let devices = rooms.dataRooms
-    .filter(room => Object.keys(room)[0] === selectedRoom)
-    .map(room => Object.values(room)[0]);
+  };
+  let devices = data.devices.filter((room) => room.partHome === selectedRoom)
+  // let devices = rooms.dataRooms
+  //   .filter(room => Object.keys(room)[0] === selectedRoom)
+  //   .map(room => Object.values(room)[0]);
   const [selected, setSelected] = useState("");
   const [selectedRoom, setSelectedRoom] = useState('Quarto');
   const [deviceSearch, setDeviceSearch] = useState('');
-  const [deviceResults, setDeviceResults] = useState(devices[0]);
+  const [deviceResults, setDeviceResults] = useState(devices);
   const [deviceEdit, setDeviceEdit] = useState('');
   const [update, setUpdate] = useState(false);
   const [roomsSearch, RoomsSearch] = useState(rooms.dataRooms);
   const [roomsResults, RoomsResults] = useState(rooms.dataRooms);
   const [modalVisible, setModalVisible] = useState(false);
-  
-  // useEffect((onOpen), [deviceEdit])
+
+  // useEffect(() => { //É UMA BOA FORMA DE FAZER
+  //   devices = rooms.dataRooms
+  //     .filter(room => Object.keys(room)[0] === selectedRoom)
+  //     .map(room => Object.values(room)[0]);
+  //   setDeviceResults(devices[0]);
+  //   setDeviceSearch("");
+  // }, [selectedRoom])
+
   useEffect(() => {
-    devices = rooms.dataRooms
-      .filter(room => Object.keys(room)[0] === selectedRoom)
-      .map(room => Object.values(room)[0]);
-    setDeviceResults(devices[0]);
+    devices = data.devices.filter((room) => room.partHome === selectedRoom)
+    setDeviceResults(devices);
     setDeviceSearch("");
-  }, [selectedRoom, devices])
+  }, [selectedRoom])
+
+  // useEffect(() => {
+  //   devices = data.devices.filter((room) => room.partHome === selectedRoom)
+  //   setDeviceResults(devices);
+  //   setDeviceSearch("");
+  // }, [devices])
 
   useEffect(() => {
-    devices = rooms.dataRooms
-      .filter(room => Object.keys(room)[0] === selectedRoom)
-      .map(room => Object.values(room)[0]);
-
+    devices = data.devices.filter((room) => room.partHome === selectedRoom)
     if (deviceSearch === 'all' || deviceSearch === '') {
-      setDeviceResults(devices[0]);
+      setDeviceResults(devices);
     } else {
-      setDeviceResults(devices[0].filter((item) => {
-        return item.type === deviceSearch ? true : false;
+      setDeviceResults(devices.filter((item) => {
+        return item.type === deviceSearch && item.partHome === selectedRoom ? true : false;
       }))
     }
   }, [deviceSearch])
-  
+
   // fazer um desse para o botão de habilitar 
   let [fontsLoaded] = useFonts({ Poppins_400Regular, Poppins_500Medium });
 
@@ -86,20 +95,20 @@ export default function App({navigation}) {
       let ind = 0;
       switch (item.type) {
         case 'socket':
-          imagePath = item.state ? images.socket_on : images.socket_off
+          imagePath = item.on ? images.socket_on : images.socket_off
           break;
         case 'air':
-          imagePath = item.state ? images.air_on : images.air_off
+          imagePath = item.on ? images.air_on : images.air_off
           break;
         case 'light':
         case 'lamp':
-          imagePath = item.state ? images.light_on : images.light_off
+          imagePath = item.on ? images.light_on : images.light_off
           break;
         case 'fan':
-          imagePath = item.state ? images.fan_on : images.fan_off
+          imagePath = item.on ? images.fan_on : images.fan_off
           break;
         case 'computer':
-          imagePath = item.state ? images.computer_on : images.computer_off
+          imagePath = item.on ? images.computer_on : images.computer_off
           break;
       }
 
@@ -121,11 +130,11 @@ export default function App({navigation}) {
             <ToggleSwitch
               onColor="grey"
               offColor="#dedede"
-              isOn={item.state}
+              isOn={item.on}
               onToggle={() => {
                 const updatedDevices = [...deviceResults];
                 const deviceIndex = updatedDevices.findIndex((d) => d.id === item.id);
-                updatedDevices[deviceIndex].state = !updatedDevices[deviceIndex].state ;
+                updatedDevices[deviceIndex].on = !updatedDevices[deviceIndex].on;
                 setDeviceResults(updatedDevices)
               }}
             />
@@ -134,7 +143,7 @@ export default function App({navigation}) {
               setDeviceEdit(item)
               modalizeRef.current?.open();
               setUpdate(false)
-               }}> 
+            }}>
               <Image source={require('../assets/Images/edit.png')} style={{ width: 45, height: 30, resizeMode: 'contain' }} />
             </TouchableOpacity>
           </View>
@@ -144,18 +153,6 @@ export default function App({navigation}) {
 
     return (
       <SafeAreaView style={{ padding: 10, paddingBottom: 10, paddingTop: inset.top, ...styles.container, backgroundColor: 'white' }}>
-        <Modalize ref={modalizeRef}
-          snapPoint={500}
-          modalHeight = {600}
-          disableScrollIfPossible={true}
-          keyboardAvoidingBehavior={'height'}
-          // openAnimationConfig={} entender melhor isso 
-          withHandle={true}
-          scrollViewProps={{showsHorizontalScrollIndicator: false, showsVerticalScrollIndicator: false}}
-           onClosed = {() => {setUpdate(true)}}> 
-          <EditModal item={deviceEdit}/>
-        </Modalize>
-
         <View style={{ flexDirection: "row", alignSelf: 'flex-end', paddingVertical: 12, justifyContent: 'flex-end', alignItems: 'center' }}>
 
           <View style={styles.centerRow}>
@@ -185,7 +182,7 @@ export default function App({navigation}) {
           </View>
           {/* <View style={styles.startRow}> */}
           <TouchableOpacity
-            onPress={() => alert("Button pressed")}>
+            onPress={() => { setModalVisible(true) }}>
             <Image source={require('../assets/Images/menu.png')} style={styles.imageButtonUp} />
           </TouchableOpacity>
           {/* </View>  */}
@@ -221,9 +218,7 @@ export default function App({navigation}) {
               placeholder='Buscar por dispositivo'
               notFoundText='Esse dispositivo não existe'
               onSelect={() => {
-                console.log(selected)
                 setDeviceSearch(data?.devicesOptions[selected]?.type)
-                console.log(data?.devicesOptions[selected]?.type)
               }}
             />
 
@@ -242,12 +237,12 @@ export default function App({navigation}) {
 
             <View style={{ flex: 1, paddingRight: 120 }}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Login', {id: 110})}>
+                onPress={() => navigation.navigate('Login', { id: 110 })}>
                 <Image source={require('../assets/Images/mapa.png')} style={styles.imageButtonDown} />
               </TouchableOpacity>
             </View>
             {/* abrir modal */}
-            <View style={{ flex: 1, paddingLeft: 120 }}>
+            <View style={{ flex: 1, paddingLeft: 110 }}>
               <TouchableOpacity
                 onPress={() => alert("Button pressed")}>
                 <Image source={require('../assets/Images/adicionar.png')} style={styles.imageButtonDown} />
@@ -255,144 +250,71 @@ export default function App({navigation}) {
             </View>
           </View>
         </View>
+        <Modalize ref={modalizeRef}
+          snapPoint={500}
+          modalHeight={600}
+          disableScrollIfPossible={true}
+          keyboardAvoidingBehavior={'height'}
+          // openAnimationConfig={} entender melhor isso 
+          withHandle={true}
+          scrollViewProps={{ showsHorizontalScrollIndicator: false, showsVerticalScrollIndicator: false }}
+          onClosed={() => {
+            setDeviceResults(data.devices.filter((room) => room.partHome === selectedRoom))
+            setUpdate(true)
+          }}>
+          <EditModal item={deviceEdit} />
+        </Modalize>
+        <Modal
+          animationType="fade"
+          transparent={false}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}>
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <View style={{
+              backgroundColor: '#EDEFF2', borderWidth: 1, borderColor: 'black', borderRadius: 20, alignSelf: 'center', shadowColor: 'black',
+              shadowOffset: { width: 0, height: 2, }, shadowOpacity: 0.25, shadowRadius: 4, elevation: 15, height: 230
+            }}>
+              <View style={{ flexDirection: 'row', margin: 10, width: 300, height: 50 }}>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ flexDirection: "row", alignSelf: "center", paddingVertical: 12, fontFamily: 'Poppins_400Regular', fontSize: 18, color: 'black', left: 17 }}>
+                    Menu
+                  </Text>
+                </View>
+                <View style={{ width: 30, height: 30, justifyContent: 'flex-start', alignSelf: 'flex-start', alignItems: 'flex-end' }}>
+                  <TouchableOpacity
+                    onPress={() => setModalVisible(!modalVisible)}>
+                    <Image source={require('../assets/Images/close.png')} style={{ width: 21, height: 21, resizeMode: 'contain' }} />
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <View style={styles.buttonMenu}>
+                <TouchableOpacity style={{ width: 290, height: 40, alignContent: 'center', justifyContent: 'center', alignItems: 'center' }}
+                  onPress={() => navigation.navigate('Home', { id: 110 })}>
+                  <Text>HOME</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.buttonMenu}>
+                <TouchableOpacity style={{ width: 290, height: 40, alignContent: 'center', justifyContent: 'center', alignItems: 'center' }}
+                  onPress={() => navigation.navigate('Config', { id: 195 })}>
+                  <Text>CONFIG</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.buttonMenu}>
+                <TouchableOpacity style={{ width: 290, height: 40, alignContent: 'center', justifyContent: 'center', alignItems: 'center' }}
+                  onPress={() => alert("Button pressed")} >
+                  <Text>
+                    LOGOUT
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
       </SafeAreaView>
     );
   }
 };
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  header: {
-    fontSize: 20,
-    flexDirection: "row",
-    alignSelf: "center"
-  },
-  centerRow: {
-    flexDirection: "row",
-    left: 38
-  },
-  startRow: {
-    justifyContent: 'flex-start',
-    alignSelf: 'center',
-  },
-  twoContainer: {
-    flexDirection: "row",
-    alignSelf: "center",
-    paddingVertical: 12,
-    fontFamily: 'Poppins_400Regular',
-    fontSize: 18
-  },
-  centerColumn: {
-    flexDirection: "column",
-    alignSelf: "center"
-  },
-  dropdown1BtnStyle: {
-    width: '80%',
-    height: 50,
-    backgroundColor: '#FFF',
-    // borderRadius: 8,
-    // borderWidth: 1,
-    borderColor: '#444',
-  },
-  dropdown1BtnTxtStyle: { color: '#000000', alignSelf: "center", fontSize: 16, fontFamily: 'Poppins_400Regular' },
-  dropdown1DropdownStyle: { borderBottomLeftRadius: 12, borderBottomRightRadius: 12, borderTopEndRadius: 12, borderTopStartRadius: 12 }, //
-  dropdown1RowStyle: { backgroundColor: '#EFEFEF', borderBottomColor: '#C5C5C5' }, // 
-  dropdown1RowTxtStyle: { color: '#444', textAlign: 'center', fontFamily: 'Poppins_400Regular', fontSize: 16 }, // 
-  font: { fontFamily: 'Poppins_400Regular', fontSize: 18, paddingVertica: 6 },
-
-  dropdown2BtnStyle: { // botão principal
-    width: '80%',
-    height: 50,
-    backgroundColor: '#e600ff',
-    borderRadius: 8,
-  },
-
-  dropdown2BtnTxtStyle: { // texto inicial 
-    color: '#FFF',
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-
-  dropdown2DropdownStyle: { // 
-    backgroundColor: '#e600ff',
-    borderBottomLeftRadius: 12,
-    borderBottomRightRadius: 12,
-  },
-
-  dropdown2RowStyle: { backgroundColor: '#444', borderBottomColor: '#C5C5C5' },
-
-  dropdown2RowTxtStyle: {
-    color: '#FFF',
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  images: {
-    width: 200,
-    height: 200,
-    resizeMode: 'contain'
-  },
-  imageButtonDown: {
-    width: 45,
-    height: 45,
-    resizeMode: 'contain'
-  },
-  imageComponent: {
-    width: 50,
-    height: 50,
-    resizeMode: 'contain'
-  },
-  imageButtonUp: {
-    width: 45,
-    height: 45,
-    resizeMode: 'contain'
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    borderWidth: 1,
-    width: 350,
-    height: 600,
-    shadowColor: 'black',
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 5,
-    // },
-    flexDirection: 'row',
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 10,
-  },
-
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-
-});

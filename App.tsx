@@ -6,6 +6,7 @@ import Home from './views/Home';
 import Login from './views/Login';
 import Menu from './views/Menu';
 import Map from './views/Map';
+import Config from './views/Config';
 
 export default function App() {
 
@@ -19,8 +20,8 @@ export default function App() {
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Menu" component={Menu} />
             <Stack.Screen name="Map" component={Map} />
+            <Stack.Screen name="Config" component={Config}/>
           </Stack.Group>
-
         </Stack.Navigator>
       </NavigationContainer>
   );

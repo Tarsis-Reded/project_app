@@ -8,31 +8,22 @@ import { Modal, Alert, Pressable, FlatList, SafeAreaView, StyleSheet, Text, Imag
 const ModalC = ({ item }) => {
   const [curruntItem, setCurruntItem] = useState(item)
   const [selected, setSelected] = useState("");
+  const [on, setOn] = useState(curruntItem.on);
+  const [state, setState] = useState(curruntItem.state);
   const [name, setName] = useState(curruntItem.title);
-  const [editItem, setItem] = useState(curruntItem);
-  useEffect(() => {
-    console.log(item)
-    setCurruntItem(item)
-  }, [item])
+  const [desc, setDesc] = useState(curruntItem.desc);
 
   return (
     <View style={{ justifyContent: 'flex-start', backgroundColor: '#EDEFF2', borderRadius: 15, height: 600 }}>
       <View style={{ backgroundColor: '#EDEFF2', borderColor: 'black', borderRadius: 20, alignSelf: 'center', shadowColor: 'black', }}>
         <View style={{ flexDirection: 'row', margin: 10 }}>
           <View style={{ flex: 1 }}>
-            <Text style={{ flexDirection: "row", alignSelf: "center", paddingVertical: 12, fontFamily: 'Poppins_400Regular', fontSize: 18, color: 'black', left: 17 }}>
+            <Text style={{ flexDirection: "row", alignSelf: "center", paddingVertical: 12, fontFamily: 'Poppins_400Regular', fontSize: 18, color: 'black'}}>
               {curruntItem.title}
             </Text>
-            <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 16, color: 'black', left: 17}}>
+            <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 16, color: 'black'}}>
               {curruntItem.type}
             </Text>
-          </View>
-
-          <View style={{ width: 30, height: 30, justifyContent: 'flex-start', alignSelf: 'flex-start', alignItems: 'flex-end' }}>
-            {/* <TouchableOpacity>
-                onPress={() => setModalVisible(!modalVisible)}
-                <Image source={require('../assets/Images/close.png')} style={{ width: 21, height: 21, resizeMode: 'contain' }} />
-              </TouchableOpacity> */}
           </View>
         </View>
         <View>
@@ -42,14 +33,10 @@ const ModalC = ({ item }) => {
           <TextInput
             style={{ height: 45, marginLeft: 12, marginRight: 12, width: 300, borderWidth: 1, borderRadius: 7, padding: 5, backgroundColor: 'white' }}
             onChangeText={setName}
-            // placeholder="TESTE"
             defaultValue={name}
             onEndEditing={() => {
               curruntItem.title = name
-              console.log(curruntItem.title)
-              setItem(curruntItem.title)
             }}
-            // enterKeyHint={'go'}
             value={name}
             // keyboardType="numeric"
             // onChangeText={() => { console.log("SHDIJABD") }}
@@ -74,14 +61,17 @@ const ModalC = ({ item }) => {
             }
             arrowicon={<Text></Text>}
             searchPlaceholder={''}
+            defaultOption={data.roomsHouse.find((rooms) => rooms.room === curruntItem.partHome)} 
             setSelected={setSelected}
-            defaultOption={data.roomsHouse.find(({ value }) => value === curruntItem.partHome)}    //deixar dinaminamico de acordo com o dispositivo
             boxStyles={{ borderColor: 'black', borderWidth: 1, width: 300, height: 45, backgroundColor: 'white', justifyContent: 'center', alignSelf: 'center', borderRadius: 7 }}
             // inputStyles={{ fontSize: 15, fontFamily: 'Poppins_400Regular', alignContent: 'center'}}
-            dropdownStyles={{ backgroundColor: 'white', width: 320, alignSelf: 'center' }}
+            dropdownStyles={{ backgroundColor: 'white', width: 300, alignSelf: 'center' }}
             placeholder='Buscar por dispositivo'
             notFoundText='Esse dispositivo não existe'
-            onSelect={() => console.log(selected)}
+
+            onSelect={() => {
+              curruntItem.partHome = data.roomsHouse[selected].room
+            }}
           />
           <View style={{ paddingTop: 15, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', alignSelf: 'center', width: 320, height: 60 }}>
             <View>
@@ -90,8 +80,11 @@ const ModalC = ({ item }) => {
                 offColor="#dedede"
                 label="Habilitado: "
                 labelStyle={{ fontFamily: 'Poppins_400Regular', fontSize: 17 }}
-                isOn={true}
-                onToggle={() => console.log(false)}
+                isOn={state}
+                onToggle={() => {
+                  setState(!state)
+                  curruntItem.state = !state;
+                }}
               />
             </View>
             <View style={{ padding: 10 }}>
@@ -100,8 +93,11 @@ const ModalC = ({ item }) => {
                 offColor="#dedede"
                 labelStyle={{ fontFamily: 'Poppins_400Regular', fontSize: 17 }}
                 label="Status: "
-                isOn={false}
-                onToggle={() => console.log(false)}
+                isOn={on}
+                onToggle={() => {
+                  setOn(!on)
+                  curruntItem.on = !on;
+                }}
               />
             </View>
           </View>
@@ -114,6 +110,12 @@ const ModalC = ({ item }) => {
             style={{ marginLeft: 12, marginRight: 12, width: 300, borderWidth: 1, borderRadius: 7, padding: 5, height: 80, backgroundColor: 'white' }}
             // onChangeText={onChangeText}
             placeholder=""
+            onChangeText={setDesc}
+            defaultValue={desc}
+            onEndEditing={() => {
+              curruntItem.desc = desc
+            }}
+            value={desc}
           // value={text}
           // keyboardType="numeric"
           // onChangeText={onChangeNumber}
