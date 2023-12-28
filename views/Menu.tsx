@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
-import { Modal, Alert, Pressable, FlatList, SafeAreaView, StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, ScrollView, TextInput } from 'react-native';
-import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import React, { useState, useEffect, useRef } from 'react';
+import { FlatList, SafeAreaView, StyleSheet, Text, Image, View, Dimensions, TouchableOpacity } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { data, rooms } from '../utils/getData';
 import { images } from '../utils/getImages';
 import SelectDropdown from 'react-native-select-dropdown';
@@ -30,19 +30,22 @@ export default function App({navigation}) {
     .map(room => Object.values(room)[0]);
   const [selected, setSelected] = useState("");
   const [selectedRoom, setSelectedRoom] = useState('Quarto');
-  const [modalVisible, setModalVisible] = useState(false);
   const [deviceSearch, setDeviceSearch] = useState('');
   const [deviceResults, setDeviceResults] = useState(devices[0]);
+  const [deviceEdit, setDeviceEdit] = useState('');
+  const [update, setUpdate] = useState(false);
   const [roomsSearch, RoomsSearch] = useState(rooms.dataRooms);
   const [roomsResults, RoomsResults] = useState(rooms.dataRooms);
-
+  const [modalVisible, setModalVisible] = useState(false);
+  
+  // useEffect((onOpen), [deviceEdit])
   useEffect(() => {
     devices = rooms.dataRooms
       .filter(room => Object.keys(room)[0] === selectedRoom)
       .map(room => Object.values(room)[0]);
     setDeviceResults(devices[0]);
     setDeviceSearch("");
-  }, [selectedRoom])
+  }, [selectedRoom, devices])
 
   useEffect(() => {
     devices = rooms.dataRooms
@@ -57,6 +60,7 @@ export default function App({navigation}) {
       }))
     }
   }, [deviceSearch])
+  
   // fazer um desse para o botão de habilitar 
   let [fontsLoaded] = useFonts({ Poppins_400Regular, Poppins_500Medium });
 
@@ -118,25 +122,19 @@ export default function App({navigation}) {
               onColor="grey"
               offColor="#dedede"
               isOn={item.state}
-              onToggle={(isOn) => {
-                const updatedDevices = [...data.devices];
+              onToggle={() => {
+                const updatedDevices = [...deviceResults];
                 const deviceIndex = updatedDevices.findIndex((d) => d.id === item.id);
-                if (isOn == true) {
-                  updatedDevices[deviceIndex].state = true;
-                  console.log(true)
-                  console.log(deviceIndex)
-
-                } else {
-                  updatedDevices[deviceIndex].state = false;
-                  console.log(deviceIndex)
-                  console.log(false)
-                  // this.setState(true);
-                  // this.onToggle(true);
-                }
+                updatedDevices[deviceIndex].state = !updatedDevices[deviceIndex].state ;
+                setDeviceResults(updatedDevices)
               }}
             />
 
-            <TouchableOpacity onPress={onOpen}>
+            <TouchableOpacity onPress={() => {
+              setDeviceEdit(item)
+              modalizeRef.current?.open();
+              setUpdate(false)
+               }}> 
               <Image source={require('../assets/Images/edit.png')} style={{ width: 45, height: 30, resizeMode: 'contain' }} />
             </TouchableOpacity>
           </View>
@@ -147,19 +145,16 @@ export default function App({navigation}) {
     return (
       <SafeAreaView style={{ padding: 10, paddingBottom: 10, paddingTop: inset.top, ...styles.container, backgroundColor: 'white' }}>
         <Modalize ref={modalizeRef}
-          snapPoint={600}
-          
-          // HeaderComponent={
-          //   <View>
-          //     <Text>Header</Text>
-          //   </View>
-          // }
+          snapPoint={500}
+          modalHeight = {600}
+          disableScrollIfPossible={true}
+          keyboardAvoidingBehavior={'height'}
+          // openAnimationConfig={} entender melhor isso 
           withHandle={true}
           scrollViewProps={{showsHorizontalScrollIndicator: false, showsVerticalScrollIndicator: false}}
-        >
-          <EditModal item={deviceResults[0]}/>
+           onClosed = {() => {setUpdate(true)}}> 
+          <EditModal item={deviceEdit}/>
         </Modalize>
-
 
         <View style={{ flexDirection: "row", alignSelf: 'flex-end', paddingVertical: 12, justifyContent: 'flex-end', alignItems: 'center' }}>
 
@@ -237,6 +232,7 @@ export default function App({navigation}) {
           <View style={{ flexDirection: 'column', flex: 3, width: 320, alignSelf: 'center', borderRadius: 7 }}>
             <FlatList
               data={deviceResults}
+              extraData={update}
               renderItem={renderItem}  //({item}) => <COMPONENTE PARAMS/> 
               keyExtractor={item => item.id}
             />
