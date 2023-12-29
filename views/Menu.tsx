@@ -10,6 +10,7 @@ import ToggleSwitch from 'toggle-switch-react-native';
 import { Modalize } from 'react-native-modalize';
 import EditModal from '../components/modal';
 import styles from '../styles/styles';
+import itemRoom from '../components/itemroom';
 // const dataRooms = rooms.dataRooms;
 
 import {
@@ -18,8 +19,8 @@ import {
   Poppins_500Medium,
 } from '@expo-google-fonts/poppins';
 
-export default function App({ navigation }) {
-
+export default function App(room, { navigation }) {
+console.log(room.route.params.room)
   const modalizeRef = useRef<Modalize>(null);
 
   const onOpen = () => {
@@ -30,7 +31,7 @@ export default function App({ navigation }) {
   //   .filter(room => Object.keys(room)[0] === selectedRoom)
   //   .map(room => Object.values(room)[0]);
   const [selected, setSelected] = useState("");
-  const [selectedRoom, setSelectedRoom] = useState('Quarto');
+  const [selectedRoom, setSelectedRoom] = useState(room.route.params.room);
   const [deviceSearch, setDeviceSearch] = useState('');
   const [deviceResults, setDeviceResults] = useState(devices);
   const [deviceEdit, setDeviceEdit] = useState('');
@@ -189,7 +190,7 @@ export default function App({ navigation }) {
         </View>
 
         {/* Dispositivos */}
-        <View style={{ backgroundColor: '#EDEFF2', flex: 2, alignSelf: 'center', width: '99%', height: 50, borderRadius: 15 }}>
+        <View style={{ backgroundColor: '#E8E8E8', flex: 2, alignSelf: 'center', width: '99%', height: 50, borderRadius: 15 }}>
 
           <View style={{ paddingVertical: 15, paddingTop: 0 }}>
 

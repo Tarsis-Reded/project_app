@@ -39,6 +39,15 @@ const App: React.FC<AppProps> = () => {
 
     <View style={styles.centeredView}>
       <>
+    <View style={{flexDirection: 'row'}}>
+      <View style={{ backgroundColor: 'white', flexDirection: 'column', width: 150, height: 148, borderWidth:1, borderRadius: 15, marginBottom: 8 }}>
+        <Text>TESTE</Text>
+        </View>
+        <View style={{ backgroundColor: 'white', flexDirection: 'column', width: 150, height: 148, borderWidth:1, borderRadius: 15, marginBottom: 8 }}>
+        <Text>TESTE</Text>
+        </View>
+        </View>
+
 
         <TouchableOpacity onPress={onOpen}>
           <Text>Open the modal</Text>

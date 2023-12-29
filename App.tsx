@@ -7,6 +7,7 @@ import Login from './views/Login';
 import Menu from './views/Menu';
 import Map from './views/Map';
 import Config from './views/Config';
+import itemRoom from './components/itemroom';
 
 export default function App() {
 
@@ -21,6 +22,7 @@ export default function App() {
             <Stack.Screen name="Menu" component={Menu} />
             <Stack.Screen name="Map" component={Map} />
             <Stack.Screen name="Config" component={Config}/>
+            <Stack.Screen name="itemRoom" component={itemRoom}/>
           </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>

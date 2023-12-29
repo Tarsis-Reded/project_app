@@ -84,6 +84,13 @@ let rooms = {
     ]
 };
 
+// let roomsInfos = 
+// {room: [
+//     { },
+//     { id: '1', title: 'Ventilador 02', name: 'fan_2', type: 'fan', state: true, partHome: 'Sala', desc: '', on: true },
+   
+// ]
+// }
 // let dataRoomsTeste = {
 //     dataRooms: [
 //         { id: '0', title: 'Ventidador 01', name: 'fan_1', type: 'fan', state: false, partHome: 'Sala', desc: '', on: true },

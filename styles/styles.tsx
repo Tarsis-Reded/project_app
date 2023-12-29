@@ -1,4 +1,9 @@
 import { StyleSheet } from "react-native";
+import {
+  useFonts,
+  Poppins_400Regular,
+  Poppins_500Medium,
+} from '@expo-google-fonts/poppins';
 
 export default StyleSheet.create({
     container: {
