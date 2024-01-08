@@ -10,7 +10,7 @@ import ToggleSwitch from 'toggle-switch-react-native';
 import { Modalize } from 'react-native-modalize';
 import EditModal from '../components/modal';
 import styles from '../styles/styles';
-import itemRoom from '../components/itemroom';
+import itemRoom from '../components/itemRoom';
 // const dataRooms = rooms.dataRooms;
 
 import {
@@ -21,6 +21,7 @@ import {
 
 export default function App(room, { navigation }) {
 console.log(room.route.params.room)
+
   const modalizeRef = useRef<Modalize>(null);
 
   const onOpen = () => {

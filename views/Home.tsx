@@ -11,6 +11,7 @@ import { Modalize } from 'react-native-modalize';
 import EditModal from '../components/modal';
 import styles from '../styles/styles';
 import itemRoom from '../components/itemroom';
+
 import {
   useFonts,
   Poppins_400Regular,
@@ -18,6 +19,7 @@ import {
 } from '@expo-google-fonts/poppins';
 
 export default function Home({ navigation }) {
+
   const inset = useSafeAreaInsets()
   const [devices, setDevices] = useState(data.devices);
   const [roomInfos, setRoomInfos] = useState([]);
@@ -55,7 +57,7 @@ export default function Home({ navigation }) {
             data={roomInfos}
             // extraData={update}
             numColumns={2}
-            renderItem={itemRoom}
+            renderItem={({item}) => itemRoom(item, navigation)}
             keyExtractor={item => item.id}
           />
         </View>
