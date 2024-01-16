@@ -10,7 +10,6 @@ import ToggleSwitch from 'toggle-switch-react-native';
 import { Modalize } from 'react-native-modalize';
 import EditModal from '../components/modal';
 import styles from '../styles/styles';
-import itemRoom from '../components/itemRoom';
 // const dataRooms = rooms.dataRooms;
 
 import {

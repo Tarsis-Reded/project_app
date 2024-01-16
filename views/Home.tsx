@@ -10,7 +10,6 @@ import ToggleSwitch from 'toggle-switch-react-native';
 import { Modalize } from 'react-native-modalize';
 import EditModal from '../components/modal';
 import styles from '../styles/styles';
-import itemRoom from '../components/itemroom';
 
 import {
   useFonts,
@@ -19,6 +18,28 @@ import {
 } from '@expo-google-fonts/poppins';
 
 export default function Home({ navigation }) {
+
+  const itemRoom = ({item}) => {
+    console.log(item)
+    const room = item.room;
+    return (
+      <View style={{ backgroundColor: 'white', flexDirection: 'column', width: 150, height: 148, borderWidth: 1, borderRadius: 15, margin: 8 }}>
+        {/* <Button
+          title='Ir para Menu'
+          onPress={() => navigation.navigate('Menu', {
+            id: 100, room: 'Sala'
+          })}
+        /> */}
+        <TouchableOpacity style = {{width: 130, height: 130,}}
+                onPress={() => navigation.navigate('Menu', {id: 100, room: {room}})}>           
+            <Text>{item.name}</Text>
+            <Text>{item.countActive}</Text>
+            <Text>{item.countDevices}</Text>
+            </TouchableOpacity>
+      </View>
+  
+    )
+  }
 
   const inset = useSafeAreaInsets()
   const [devices, setDevices] = useState(data.devices);
@@ -29,7 +50,7 @@ export default function Home({ navigation }) {
   useEffect(() => {
     let dataRooms = []
     for (const room of data.roomsHouse) {
-      let roomInfo = { name: room.value, countDevices: devices.filter(element => element.partHome === room.room).length, countActive: 0 }
+      let roomInfo = { name: room.value, countDevices: devices.filter(element => element.partHome === room.room).length, countActive: 0, room: room.room }
       dataRooms.push(roomInfo)
       setRoomInfos(dataRooms)
     }
@@ -41,10 +62,10 @@ export default function Home({ navigation }) {
 
       <View style={{ flexDirection: "row", alignSelf: 'flex-end', paddingVertical: 12, justifyContent: 'flex-end', alignItems: 'center' }}>
 
-        <View style={{flexDirection: "row", alignItems: 'center', width: 299, justifyContent: 'center', left: 25}}>
-          <Text style={{flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 20}}>Cômodos</Text>
+        <View style={{ flexDirection: "row", alignItems: 'center', width: 299, justifyContent: 'center', left: 25 }}>
+          <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 20 }}>Cômodos</Text>
         </View>
-        
+
         <TouchableOpacity
           onPress={() => { setModalVisible(true) }}>
           <Image source={require('../assets/Images/menu.png')} style={styles.imageButtonUp} />
@@ -57,7 +78,7 @@ export default function Home({ navigation }) {
             data={roomInfos}
             // extraData={update}
             numColumns={2}
-            renderItem={({item}) => itemRoom(item, navigation)}
+            renderItem={itemRoom}
             keyExtractor={item => item.id}
           />
         </View>
