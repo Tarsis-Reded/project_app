@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Modal, FlatList, SafeAreaView, StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, Pressable, Alert } from 'react-native';
+import { Modal, FlatList, SafeAreaView, StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, Pressable, Alert, Button } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { data, rooms } from '../utils/getData';
 import { images } from '../utils/getImages';
@@ -18,18 +18,17 @@ import {
   Poppins_500Medium,
 } from '@expo-google-fonts/poppins';
 
-export default function App(room, { navigation }) {
-console.log(room.route.params.room)
-
+export default function App(room) {
   const modalizeRef = useRef<Modalize>(null);
-
+  // console.log(room.navigation)
   const onOpen = () => {
     modalizeRef.current?.open();
   };
   let devices = data.devices.filter((room) => room.partHome === selectedRoom)
-  // let devices = rooms.dataRooms
+  // let devices = rooms.dataRooms room.route.params.room
   //   .filter(room => Object.keys(room)[0] === selectedRoom)
   //   .map(room => Object.values(room)[0]);
+  const [navigation, setNavigation] = useState(room.navigation)
   const [selected, setSelected] = useState("");
   const [selectedRoom, setSelectedRoom] = useState(room.route.params.room);
   const [deviceSearch, setDeviceSearch] = useState('');
@@ -49,6 +48,8 @@ console.log(room.route.params.room)
   // }, [selectedRoom])
 
   useEffect(() => {
+    // const room = selectedRoom
+    // console.log(teste);
     devices = data.devices.filter((room) => room.partHome === selectedRoom)
     setDeviceResults(devices);
     setDeviceSearch("");
@@ -160,7 +161,7 @@ console.log(room.route.params.room)
             <SelectDropdown
               data={data.roomsOptions}
               onSelect={(selectedItem) => { setSelectedRoom(selectedItem.replace(/ /g, "_")) }}
-              defaultValue={data.roomsOptions.find(room => room == selectedRoom)}
+              defaultValue={data.roomsOptions.find(room => room == selectedRoom.replace(/_/g, " "))}
               buttonTextAfterSelection={(selectedItem) => {
                 return selectedItem;
               }}
@@ -188,7 +189,6 @@ console.log(room.route.params.room)
           </TouchableOpacity>
           {/* </View>  */}
         </View>
-
         {/* Dispositivos */}
         <View style={{ backgroundColor: '#E8E8E8', flex: 2, alignSelf: 'center', width: '99%', height: 50, borderRadius: 15 }}>
 
@@ -299,8 +299,8 @@ console.log(room.route.params.room)
               </View>
               <View style={styles.buttonMenu}>
                 <TouchableOpacity style={{ width: 290, height: 40, alignContent: 'center', justifyContent: 'center', alignItems: 'center' }}
-                  onPress={() => navigation.navigate('Config', { id: 195 })}>
-                  <Text>CONFIG</Text>
+                onPress={() => navigation.navigate('Config', { id: 195 })}>
+                <Text>CONFIG</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.buttonMenu}>

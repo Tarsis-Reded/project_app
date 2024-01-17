@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "ArDoHino",
-    "slug": "ArDoHino",
+    "slug": "only-project",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,16 +15,24 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "iosOnly"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.tarsis_reded.onlyproject"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7f39573d-89dc-40c8-b09b-d29f4e6fe84c"
+      }
+    },
+    "owner": "tarsis_reded"
   }
 }
