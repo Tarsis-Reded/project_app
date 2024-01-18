@@ -19,9 +19,7 @@ import {
 
 export default function Home({ navigation }) {
 
-  const itemRoom = ({item}) => {
-    console.log(item)
-    const room = item.room;
+  const itemRoom = ({ item }) => {
     return (
       <View style={{ backgroundColor: 'white', flexDirection: 'column', width: 150, height: 148, borderWidth: 1, borderRadius: 15, margin: 8 }}>
         {/* <Button
@@ -30,14 +28,25 @@ export default function Home({ navigation }) {
             id: 100, room: 'Sala'
           })}
         /> */}
-        <TouchableOpacity style = {{width: 130, height: 130,}}
-                onPress={() => navigation.navigate('Menu', {id: 100, room: {room}})}>           
-            <Text>{item.name}</Text>
-            <Text>{item.countActive}</Text>
-            <Text>{item.countDevices}</Text>
-            </TouchableOpacity>
+        <TouchableOpacity style={{ width: 130, height: 130, alignContent: 'center', alignItems: 'center', alignSelf: 'center' }}
+          onPress={() => {
+            navigation.navigate('Menu', { room: item.room })
+          }}>
+
+          <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 15, paddingTop: 10 }}>{item.name}</Text>
+          <View style={{ flexDirection: 'row', }}>
+            <View style={{ flexDirection: 'column', }}>
+              <Text>LIGADOS </Text>
+              <Text>DISPOSITIVOS </Text>
+            </View>
+            <View style={{ flexDirection: 'column', }}>
+              <Text>{item.countActive}</Text>
+              <Text>{item.countDevices}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
       </View>
-  
+
     )
   }
 
@@ -50,11 +59,15 @@ export default function Home({ navigation }) {
   useEffect(() => {
     let dataRooms = []
     for (const room of data.roomsHouse) {
-      let roomInfo = { name: room.value, countDevices: devices.filter(element => element.partHome === room.room).length, countActive: 0, room: room.room }
+      let roomInfo = {
+        name: room.value, countDevices: devices.filter(element => element.partHome === room.room).length,
+        countActive: devices.filter(element => element.partHome === room.room && element.state).length,
+        room: room.room
+      }
       dataRooms.push(roomInfo)
       setRoomInfos(dataRooms)
     }
-    console.log(roomInfos)
+    console.log("STETS", roomInfos)
   }, [rooms])
 
   return (
@@ -76,20 +89,13 @@ export default function Home({ navigation }) {
         <View style={{ flexDirection: 'row', height: 620, borderRadius: 7, paddingTop: 10 }}>
           <FlatList
             data={roomInfos}
-            // extraData={update}
+            // extraData={update} 
             numColumns={2}
             renderItem={itemRoom}
             keyExtractor={item => item.id}
           />
         </View>
       </View>
-
-      <Button
-        title='Ir para Menu'
-        onPress={() => navigation.navigate('Menu', {
-          id: 100, room: 'Sala'
-        })}
-      />
 
       <Button
         title='Ir psara Login'
