@@ -32,8 +32,11 @@ export default function Home({ navigation }) {
           onPress={() => {
             navigation.navigate('Menu', { room: item.room })
           }}>
-
+            
           <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 15, paddingTop: 10 }}>{item.name}</Text>
+          <View>
+            <Image source={images.livingRoomIcon} style={{ width: 60, height: 60, resizeMode: 'contain' }} />
+          </View>
           <View style={{ flexDirection: 'row', }}>
             <View style={{ flexDirection: 'column', }}>
               <Text>LIGADOS </Text>
@@ -76,7 +79,9 @@ export default function Home({ navigation }) {
       <View style={{ flexDirection: "row", alignSelf: 'flex-end', paddingVertical: 12, justifyContent: 'flex-end', alignItems: 'center' }}>
 
         <View style={{ flexDirection: "row", alignItems: 'center', width: 299, justifyContent: 'center', left: 25 }}>
-          <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 20 }}>Cômodos</Text>
+          <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 20 }}>
+            Cômodos
+          </Text>
         </View>
 
         <TouchableOpacity
