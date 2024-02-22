@@ -263,7 +263,7 @@ export default function App(room) {
             setDeviceResults(data.devices.filter((room) => room.partHome === selectedRoom))
             setUpdate(true)
           }}>
-          <EditModal item={deviceEdit} />
+          <EditModal item={deviceEdit}/>
         </Modalize>
         <Modal
           animationType="fade"

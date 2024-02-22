@@ -27,7 +27,12 @@ const images = {
     arrowSearch :require('../assets/Images/arrowSearch.png'),
     searchIcon :require('../assets/Images/search.png'),
     closeIcon :require('../assets/Images/close.png'),
-    livingRoomIcon :require('../assets/Images/sala.png')   
+    livingRoomIcon :require('../assets/Images/sala-de-estar.png'),   
+    bedRoom :require('../assets/Images/quarto.png'),   
+    diningRoom :require('../assets/Images/sala-de-jantar.png'),   
+    kitchen :require('../assets/Images/cozinha.png'),
+    gamesRoom :require('../assets/Images/quarto-jogos.png'),
+    gamesRoomA :require('../assets/Images/quarto-de-jogos.png')
 }
 
 export {images};

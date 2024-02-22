@@ -92,7 +92,7 @@ const ModalC = ({ item }) => {
                 onColor="grey"
                 offColor="#dedede"
                 labelStyle={{ fontFamily: 'Poppins_400Regular', fontSize: 17 }}
-                label="Status: "
+                label="On\Off: "
                 isOn={on}
                 onToggle={() => {
                   setOn(!on)

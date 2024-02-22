@@ -18,33 +18,46 @@ import {
 } from '@expo-google-fonts/poppins';
 
 export default function Home({ navigation }) {
-
+  
   const itemRoom = ({ item }) => {
+    let imagePath;
+    switch (item.room) {
+      case 'Sala':
+        imagePath = images.livingRoomIcon
+        break;
+      case 'Cozinha':
+        imagePath = images.kitchen
+        break;
+      case 'Sala_de_Jantar':
+          imagePath = images.diningRoom
+          break;
+      case 'Quarto':
+        imagePath = images.bedRoom
+        break;     
+      case 'Quarto_de_Jogos':
+        imagePath = images.gamesRoomA
+        break;     
+    }
+
     return (
-      <View style={{ backgroundColor: 'white', flexDirection: 'column', width: 150, height: 148, borderWidth: 1, borderRadius: 15, margin: 8 }}>
-        {/* <Button
-          title='Ir para Menu'
-          onPress={() => navigation.navigate('Menu', {
-            id: 100, room: 'Sala'
-          })}
-        /> */}
-        <TouchableOpacity style={{ width: 130, height: 130, alignContent: 'center', alignItems: 'center', alignSelf: 'center' }}
+      <View style={{ backgroundColor: 'white', flexDirection: 'column', width: 158, height: 158, borderWidth: 1, borderRadius: 15, margin: 8 }}>
+        <TouchableOpacity style={{ width: 140, height: 140, alignContent: 'center', alignItems: 'center', alignSelf: 'center' }}
           onPress={() => {
             navigation.navigate('Menu', { room: item.room })
           }}>
             
           <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 15, paddingTop: 10 }}>{item.name}</Text>
-          <View>
-            <Image source={images.livingRoomIcon} style={{ width: 60, height: 60, resizeMode: 'contain' }} />
+          <View style={{padding: 13}}>
+            <Image source={imagePath} style={{width: 60, height: 60, resizeMode: 'contain' }} />
           </View>
           <View style={{ flexDirection: 'row', }}>
             <View style={{ flexDirection: 'column', }}>
-              <Text>LIGADOS </Text>
-              <Text>DISPOSITIVOS </Text>
+              {/* <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 15}}>Ligado</Text> */}
+              <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 15}}>Dispositivos     </Text>
             </View>
             <View style={{ flexDirection: 'column', }}>
-              <Text>{item.countActive}</Text>
-              <Text>{item.countDevices}</Text>
+              {/* <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 15}}>{item.countActive}</Text> */}
+              <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 15}}>{item.countDevices}</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -64,7 +77,7 @@ export default function Home({ navigation }) {
     for (const room of data.roomsHouse) {
       let roomInfo = {
         name: room.value, countDevices: devices.filter(element => element.partHome === room.room).length,
-        countActive: devices.filter(element => element.partHome === room.room && element.state).length,
+        countActive: devices.filter(element => element.partHome === room.room && element.on).length,
         room: room.room
       }
       dataRooms.push(roomInfo)
