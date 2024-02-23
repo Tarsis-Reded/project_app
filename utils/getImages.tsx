@@ -14,6 +14,10 @@ const closeIcon = require('../assets/Images/close.png');
 
 
 const images = {
+    options :require('../assets/Images/options.png'),
+    map :require('../assets/Images/map.png'),
+    edit :require('../assets/Images/edit.png'),
+    add :require('../assets/Images/add.png'),
     socket_on :require('../assets/Images/socket_on.png'),
     socket_off :require('../assets/Images/socket_off.png'),
     air_on :require('../assets/Images/air_on.png'),

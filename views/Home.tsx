@@ -8,7 +8,7 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import AppLoading from 'expo-app-loading';
 import ToggleSwitch from 'toggle-switch-react-native';
 import { Modalize } from 'react-native-modalize';
-import EditModal from '../components/modal';
+import ModalDevice from '../components/modalDevice';
 import styles from '../styles/styles';
 
 import {
@@ -83,7 +83,6 @@ export default function Home({ navigation }) {
       dataRooms.push(roomInfo)
       setRoomInfos(dataRooms)
     }
-    console.log("STETS", roomInfos)
   }, [rooms])
 
   return (
@@ -91,7 +90,7 @@ export default function Home({ navigation }) {
 
       <View style={{ flexDirection: "row", alignSelf: 'flex-end', paddingVertical: 12, justifyContent: 'flex-end', alignItems: 'center' }}>
 
-        <View style={{ flexDirection: "row", alignItems: 'center', width: 299, justifyContent: 'center', left: 25 }}>
+        <View style={{ flexDirection: "row", alignItems: 'center', width: 299, justifyContent: 'center', left: 14 }}>
           <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 20 }}>
             Cômodos
           </Text>
@@ -99,7 +98,7 @@ export default function Home({ navigation }) {
 
         <TouchableOpacity
           onPress={() => { setModalVisible(true) }}>
-          <Image source={require('../assets/Images/menu.png')} style={styles.imageButtonUp} />
+          <Image source={images.options} style={styles.imageButtonUp} />
         </TouchableOpacity>
       </View>
 
@@ -114,13 +113,6 @@ export default function Home({ navigation }) {
           />
         </View>
       </View>
-
-      <Button
-        title='Ir psara Login'
-        onPress={() => navigation.navigate('Login', {
-          id: 110, room: 'Sala'
-        })}
-      />
       <Modal
         animationType="fade"
         transparent={false}

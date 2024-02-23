@@ -8,7 +8,8 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import AppLoading from 'expo-app-loading';
 import ToggleSwitch from 'toggle-switch-react-native';
 import { Modalize } from 'react-native-modalize';
-import EditModal from '../components/modal';
+import ModalDevice from '../components/modalDevice';
+import ModalMenu from '../components/modalMenu';
 import styles from '../styles/styles';
 // const dataRooms = rooms.dataRooms;
 
@@ -19,7 +20,11 @@ import {
 } from '@expo-google-fonts/poppins';
 
 export default function App(room) {
+
   const modalizeRef = useRef<Modalize>(null);
+  
+  const modelMenuRef = useRef<Modalize>(null);
+
   // console.log(room.navigation)
   const onOpen = () => {
     modalizeRef.current?.open();
@@ -146,7 +151,7 @@ export default function App(room) {
               modalizeRef.current?.open();
               setUpdate(false)
             }}>
-              <Image source={require('../assets/Images/edit.png')} style={{ width: 45, height: 30, resizeMode: 'contain' }} />
+              <Image source={images.edit} style={{ width: 45, height: 30, resizeMode: 'contain' }} />
             </TouchableOpacity>
           </View>
         </View>
@@ -184,8 +189,10 @@ export default function App(room) {
           </View>
           {/* <View style={styles.startRow}> */}
           <TouchableOpacity
-            onPress={() => { setModalVisible(true) }}>
-            <Image source={require('../assets/Images/menu.png')} style={styles.imageButtonUp} />
+            onPress={() => {
+              modalizeRef.current?.open();
+              setUpdate(false) }}>
+            <Image source={images.options} style={styles.imageButtonUp} />
           </TouchableOpacity>
           {/* </View>  */}
         </View>
@@ -238,15 +245,15 @@ export default function App(room) {
 
             <View style={{ flex: 1, paddingRight: 120 }}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Login', { id: 110 })}>
-                <Image source={require('../assets/Images/mapa.png')} style={styles.imageButtonDown} />
+                onPress={() => navigation.navigate('Home', { id: 110 })}>
+                <Image source={images.map} style={styles.imageButtonDown} />
               </TouchableOpacity>
             </View>
             {/* abrir modal */}
             <View style={{ flex: 1, paddingLeft: 110 }}>
               <TouchableOpacity
                 onPress={() => alert("Button pressed")}>
-                <Image source={require('../assets/Images/adicionar.png')} style={styles.imageButtonDown} />
+                <Image source={images.add} style={styles.imageButtonDown} />
               </TouchableOpacity>
             </View>
           </View>
@@ -263,7 +270,17 @@ export default function App(room) {
             setDeviceResults(data.devices.filter((room) => room.partHome === selectedRoom))
             setUpdate(true)
           }}>
-          <EditModal item={deviceEdit}/>
+          <ModalDevice item={deviceEdit}/>
+        </Modalize>
+        <Modalize ref={modelMenuRef}
+          snapPoint={500}
+          modalHeight={600}
+          disableScrollIfPossible={true}
+          keyboardAvoidingBehavior={'height'}
+          // openAnimationConfig={} entender melhor isso 
+          withHandle={true}
+          scrollViewProps={{ showsHorizontalScrollIndicator: false, showsVerticalScrollIndicator: false }}>
+          <ModalMenu/>
         </Modalize>
         <Modal
           animationType="fade"
