@@ -11,6 +11,8 @@ import { Modalize } from 'react-native-modalize';
 import ModalDevice from '../components/modalDevice';
 import ModalMenu from '../components/modalMenu';
 import styles from '../styles/styles';
+import 'react-native-gesture-handler';
+
 // const dataRooms = rooms.dataRooms;
 
 import {
