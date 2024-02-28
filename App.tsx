@@ -12,28 +12,27 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 const Drawer = createDrawerNavigator();
 
-function Feed() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      {/* <Text>Feed Screen</Text> */}
-    </View>
-  );
-}
-
-function Article() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Article Screen</Text>
-    </View>
-  );
-}
-
 function DrawerMain() {
   return (
-    <Drawer.Navigator >
+    <Drawer.Navigator initialRouteName="Home">
       <Drawer.Group screenOptions={{ headerShown: false }}>
-        <Drawer.Screen name="Cômodo" component={Home} options={{ drawerPosition: 'left', drawerType: 'slide'}} />
+        <Drawer.Screen name="Cômodo" component={Home} options={{ drawerPosition: 'right', drawerType: 'slide' }} />
         <Drawer.Screen name="Login" component={Login} options={{ drawerPosition: 'right', drawerType: 'slide'}} />
+        <Drawer.Screen name="Config" component={Config}  options={{ drawerPosition: 'right', drawerType: 'slide', }} />
+      </Drawer.Group>
+    </Drawer.Navigator>
+  );
+}
+
+function DrawerRoom() {
+  return (
+    <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Group screenOptions={{ headerShown: false }}>
+        <Drawer.Screen name="Cômodo" component={Home} options={{ drawerPosition: 'right', drawerType: 'slide' }} />
+        <Drawer.Screen name="Login" component={Login} options={{ drawerPosition: 'right', drawerType: 'slide'}} />
+        <Drawer.Screen name="Config" component={Config}  options={{ drawerPosition: 'right', drawerType: 'slide', }} />
+        <Drawer.Screen name="Menu" component={Menu}  options={{ drawerPosition: 'right', drawerType: 'slide'}} />
+
       </Drawer.Group>
     </Drawer.Navigator>
   );
@@ -49,6 +48,8 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Group screenOptions={{ headerShown: false }}> 
           <Stack.Screen name="MyDrawer" component={DrawerMain}/>
+          <Stack.Screen name="MyDrawer" component={DrawerMain}/>
+
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Menu" component={Menu} />
