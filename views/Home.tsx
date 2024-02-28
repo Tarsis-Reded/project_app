@@ -70,7 +70,8 @@ export default function Home({ navigation }) {
   const [devices, setDevices] = useState(data.devices);
   const [roomInfos, setRoomInfos] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-
+  // navigation.openDrawer();
+  // navigation.closeDrawer();
 
   useEffect(() => {
     let dataRooms = []
@@ -97,7 +98,7 @@ export default function Home({ navigation }) {
         </View>
 
         <TouchableOpacity
-          onPress={() => { setModalVisible(true) }}>
+          onPress={() => { navigation.openDrawer()}}>
           <Image source={images.options} style={styles.imageButtonUp} />
         </TouchableOpacity>
       </View>
