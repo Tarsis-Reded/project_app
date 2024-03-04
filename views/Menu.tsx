@@ -12,6 +12,7 @@ import ModalDevice from '../components/modalDevice';
 import ModalMenu from '../components/modalMenu';
 import styles from '../styles/styles';
 import 'react-native-gesture-handler';
+import { Drawer } from 'react-native-drawer-layout';
 
 // const dataRooms = rooms.dataRooms;
 
@@ -45,14 +46,7 @@ export default function App(room) {
   const [roomsSearch, RoomsSearch] = useState(rooms.dataRooms);
   const [roomsResults, RoomsResults] = useState(rooms.dataRooms);
   const [modalVisible, setModalVisible] = useState(false);
-
-  // useEffect(() => { //É UMA BOA FORMA DE FAZER
-  //   devices = rooms.dataRooms
-  //     .filter(room => Object.keys(room)[0] === selectedRoom)
-  //     .map(room => Object.values(room)[0]);
-  //   setDeviceResults(devices[0]);
-  //   setDeviceSearch("");
-  // }, [selectedRoom])
+  const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
     // const room = selectedRoom
@@ -61,12 +55,6 @@ export default function App(room) {
     setDeviceResults(devices);
     setDeviceSearch("");
   }, [selectedRoom])
-
-  // useEffect(() => {
-  //   devices = data.devices.filter((room) => room.partHome === selectedRoom)
-  //   setDeviceResults(devices);
-  //   setDeviceSearch("");
-  // }, [devices])
 
   useEffect(() => {
     devices = data.devices.filter((room) => room.partHome === selectedRoom)
@@ -89,14 +77,6 @@ export default function App(room) {
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
     type ItemProps = { title: string };
-    // const Item = ({ title }) => (
-    //   <View style={{ backgroundColor: 'white', flexDirection: 'row', borderWidth: 1, width: 320, height: 65, borderRadius: 7, marginBottom: 8 }}>
-    //     <Image
-    //             style={styles.imageComponent}
-    //             source={require('../assets/Images/light_on.png')}
-    //           />
-    //   </View>
-    // );
 
     const renderItem = ({ item }) => {
       let imagePath;
@@ -150,7 +130,6 @@ export default function App(room) {
 
             <TouchableOpacity onPress={() => {
               setDeviceEdit(item)
-              modalizeRef.current?.open();
               setUpdate(false)
             }}>
               <Image source={images.edit} style={{ width: 45, height: 30, resizeMode: 'contain' }} />
@@ -162,6 +141,20 @@ export default function App(room) {
 
     return (
       <SafeAreaView style={{ padding: 10, paddingBottom: 10, paddingTop: inset.top, ...styles.container, backgroundColor: 'white' }}>
+         <Drawer
+              open={open}
+              onOpen={() => setOpen(true)}
+              onClose={() => setOpen(false)}
+              swipeEdgeWidth = {10}
+              // drawerPosition='right'
+              // drawerType = 'slide'
+              renderDrawerContent={() => {
+                return <Text>1</Text>;
+              }}>
+              {/* <Button
+                onPress={() => setOpen((prevOpen) => !prevOpen)}
+                title={`${open ? 'Close' : 'Open'} drawer`}
+              /> */}
         <View style={{ flexDirection: "row", alignSelf: 'flex-end', paddingVertical: 12, justifyContent: 'flex-end', alignItems: 'center' }}>
 
           <View style={styles.centerRow}>
@@ -192,7 +185,7 @@ export default function App(room) {
           {/* <View style={styles.startRow}> */}
           <TouchableOpacity
             onPress={() => {
-              modalizeRef.current?.open();
+              setOpen(true)
               setUpdate(false) }}>
             <Image source={images.options} style={styles.imageButtonUp} />
           </TouchableOpacity>
@@ -274,16 +267,6 @@ export default function App(room) {
           }}>
           <ModalDevice item={deviceEdit}/>
         </Modalize>
-        <Modalize ref={modelMenuRef}
-          snapPoint={500}
-          modalHeight={600}
-          disableScrollIfPossible={true}
-          keyboardAvoidingBehavior={'height'}
-          // openAnimationConfig={} entender melhor isso 
-          withHandle={true}
-          scrollViewProps={{ showsHorizontalScrollIndicator: false, showsVerticalScrollIndicator: false }}>
-          <ModalMenu/>
-        </Modalize>
         <Modal
           animationType="fade"
           transparent={false}
@@ -333,7 +316,7 @@ export default function App(room) {
             </View>
           </View>
         </Modal>
-
+        </Drawer>
       </SafeAreaView>
     );
   }

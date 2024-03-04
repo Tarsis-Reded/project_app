@@ -10,33 +10,19 @@ import Config from './views/Config';
 import itemRoom from './components/itemroom';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-const Drawer = createDrawerNavigator();
+// const Drawer = createDrawerNavigator();
 
-function DrawerMain() {
-  return (
-    <Drawer.Navigator initialRouteName="Home">
-      <Drawer.Group screenOptions={{ headerShown: false }}>
-        <Drawer.Screen name="Cômodo" component={Home} options={{ drawerPosition: 'right', drawerType: 'slide' }} />
-        <Drawer.Screen name="Login" component={Login} options={{ drawerPosition: 'right', drawerType: 'slide'}} />
-        <Drawer.Screen name="Config" component={Config}  options={{ drawerPosition: 'right', drawerType: 'slide', }} />
-      </Drawer.Group>
-    </Drawer.Navigator>
-  );
-}
-
-function DrawerRoom() {
-  return (
-    <Drawer.Navigator initialRouteName="Home">
-      <Drawer.Group screenOptions={{ headerShown: false }}>
-        <Drawer.Screen name="Cômodo" component={Home} options={{ drawerPosition: 'right', drawerType: 'slide' }} />
-        <Drawer.Screen name="Login" component={Login} options={{ drawerPosition: 'right', drawerType: 'slide'}} />
-        <Drawer.Screen name="Config" component={Config}  options={{ drawerPosition: 'right', drawerType: 'slide', }} />
-        <Drawer.Screen name="Menu" component={Menu}  options={{ drawerPosition: 'right', drawerType: 'slide'}} />
-
-      </Drawer.Group>
-    </Drawer.Navigator>
-  );
-}
+// function DrawerMain() {
+//   return (
+//     <Drawer.Navigator initialRouteName="Home" >
+//       <Drawer.Group screenOptions={{ headerShown: false }}>
+//         <Drawer.Screen name="Cômodo" component={Home} options={{ drawerPosition: 'right', drawerType: 'slide' }} />
+//         <Drawer.Screen name="Login" component={Login} options={{ drawerPosition: 'right', drawerType: 'slide'}} />
+//         <Drawer.Screen name="Config" component={Config}  options={{ drawerPosition: 'right', drawerType: 'slide', }} />
+//       </Drawer.Group>
+//     </Drawer.Navigator>
+//   );
+// }
 // Aqui para o menu depois dos comodos vamos pricicar criar um novo drawer e seleciona-lo quando abrir a tela 
 
 export default function App() {
@@ -47,9 +33,6 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Group screenOptions={{ headerShown: false }}> 
-          <Stack.Screen name="MyDrawer" component={DrawerMain}/>
-          <Stack.Screen name="MyDrawer" component={DrawerMain}/>
-
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Menu" component={Menu} />
