@@ -20,10 +20,39 @@ const ModalC = () => {
 
   return (
     <SafeAreaView style={{ padding: 10, paddingBottom: 10, paddingTop: inset.top, backgroundColor: 'white', width: 230, height: windowHeight }}>
-
- 
     </SafeAreaView>
   );
 }
 
 export default ModalC;
+
+
+// import React, { useEffect, useState } from 'react';
+// import ToggleSwitch from 'toggle-switch-react-native';
+// import { data, rooms } from '../utils/getData';
+// import { images } from '../utils/getImages';
+// import { SelectList } from 'react-native-dropdown-select-list';
+// import { Modal, Alert, Pressable, FlatList, SafeAreaView, StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, ScrollView, TextInput, Button } from 'react-native';
+// import { useSafeAreaInsets } from 'react-native-safe-area-context';
+// import { useNavigation } from '@react-navigation/native';
+// import Config from '../views/Config';
+
+
+
+// const inset = useSafeAreaInsets()
+// const windowWidth = Dimensions.get('window').width;
+// const windowHeight = Dimensions.get('window').height;
+
+// export default function ModalMenu({ navigation }) {
+//   const inset = useSafeAreaInsets()
+
+//   return (
+//     <SafeAreaView style={{ padding: 10, paddingBottom: 10, paddingTop: inset.top, backgroundColor: 'white', width: 230, height: windowHeight }}>
+//       <Button
+//         title={`Go to`}
+//         onPress={() => navigation.navigate('Root', { screen: 'Profile' })}
+//       />
+//     </SafeAreaView>
+//   );
+// }
+

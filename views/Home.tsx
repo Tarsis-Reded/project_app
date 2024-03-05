@@ -12,6 +12,8 @@ import ModalDevice from '../components/modalDevice';
 import styles from '../styles/styles';
 import { Drawer } from 'react-native-drawer-layout';
 import ModalMenu from '../components/modalMenu';
+import ModMenu from '../components/ModMenu';
+
 
 import {
   useFonts,
@@ -100,7 +102,7 @@ export default function Home({ navigation }) {
         drawerStyle = {{backgroundColor: 'white', width: 230, justifyContent: 'flex-end', alignContent: 'flex-end', alignItems: 'flex-end', alignSelf: 'flex-end'}}
         // drawerPosition='right'
         renderDrawerContent={() => {
-          return  <ModalMenu/>
+          return  <ModMenu navigation={this.props.navigation} screenName={"Config"} />
         }}>
        
         <View style={{ flexDirection: "row", alignSelf: 'flex-start', paddingVertical: 12, justifyContent: 'flex-start', alignItems: 'center' }}>

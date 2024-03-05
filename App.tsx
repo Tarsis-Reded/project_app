@@ -7,10 +7,10 @@ import Login from './views/Login';
 import Menu from './views/Menu';
 import Map from './views/Map';
 import Config from './views/Config';
-import itemRoom from './components/itemroom';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import ModMenu from './components/ModMenu';
 
-// const Drawer = createDrawerNavigator();
+const Drawer = createDrawerNavigator();
 
 // function DrawerMain() {
 //   return (
@@ -30,6 +30,17 @@ export default function App() {
   const Stack = createStackNavigator();
 
   return (
+  //   <NavigationContainer>
+  //   <Drawer.Navigator>
+  //     <Drawer.Group screenOptions={{ headerShown: false }}>
+  //       <Drawer.Screen name="Home" component={Home} />
+  //       <Drawer.Screen name="Login" component={Login} />
+  //       <Drawer.Screen name="Menu" component={Menu} />
+  //       <Drawer.Screen name="Map" component={Map} />
+  //       <Drawer.Screen name="Config" component={Config} />
+  //     </Drawer.Group>
+  //   </Drawer.Navigator>
+  // </NavigationContainer>
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Group screenOptions={{ headerShown: false }}> 
@@ -38,12 +49,9 @@ export default function App() {
           <Stack.Screen name="Menu" component={Menu} />
           <Stack.Screen name="Map" component={Map} />
           <Stack.Screen name="Config" component={Config} />
+          <Stack.Screen name="ModalMenu" component={ModMenu} />
         </Stack.Group>
       </Stack.Navigator>
-      {/* <Drawer.Navigator>
-          <Drawer.Screen name="Feed" component={Feed} />
-          <Drawer.Screen name="Article" component={Article} />
-        </Drawer.Navigator> */}
     </NavigationContainer>
 
   );
