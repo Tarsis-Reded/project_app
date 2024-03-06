@@ -102,7 +102,7 @@ export default function Home({ navigation }) {
         drawerStyle = {{backgroundColor: 'white', width: 230, justifyContent: 'flex-end', alignContent: 'flex-end', alignItems: 'flex-end', alignSelf: 'flex-end'}}
         // drawerPosition='right'
         renderDrawerContent={() => {
-          return  <ModMenu navigation={this.props.navigation} screenName={"Config"} />
+          return  <ModMenu navigationParam={navigation} screenName={"Home"} />
         }}>
        
         <View style={{ flexDirection: "row", alignSelf: 'flex-start', paddingVertical: 12, justifyContent: 'flex-start', alignItems: 'center' }}>
