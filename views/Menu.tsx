@@ -25,13 +25,11 @@ import {
 export default function App(room) {
 
   const modalizeRef = useRef<Modalize>(null);
-  
-  const modelMenuRef = useRef<Modalize>(null);
 
-  // console.log(room.navigation)
   const onOpen = () => {
     modalizeRef.current?.open();
   };
+
   let devices = data.devices.filter((room) => room.partHome === selectedRoom)
   // let devices = rooms.dataRooms room.route.params.room
   //   .filter(room => Object.keys(room)[0] === selectedRoom)
@@ -45,12 +43,8 @@ export default function App(room) {
   const [update, setUpdate] = useState(false);
   const [roomsSearch, RoomsSearch] = useState(rooms.dataRooms);
   const [roomsResults, RoomsResults] = useState(rooms.dataRooms);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
-    // const room = selectedRoom
-    // console.log(teste);
     devices = data.devices.filter((room) => room.partHome === selectedRoom)
     setDeviceResults(devices);
     setDeviceSearch("");
@@ -129,6 +123,7 @@ export default function App(room) {
             />
 
             <TouchableOpacity onPress={() => {
+              modalizeRef.current?.open();
               setDeviceEdit(item)
               setUpdate(false)
             }}>
@@ -141,22 +136,7 @@ export default function App(room) {
 
     return (
       <SafeAreaView style={{ padding: 10, paddingBottom: 10, paddingTop: inset.top, ...styles.container, backgroundColor: 'white' }}>
-         <Drawer
-              open={open}
-              onOpen={() => setOpen(true)}
-              onClose={() => setOpen(false)}
-              swipeEdgeWidth = {10}
-              // drawerPosition='right'
-              // drawerType = 'slide'
-              renderDrawerContent={() => {
-                return <Text>1</Text>;
-              }}>
-              {/* <Button
-                onPress={() => setOpen((prevOpen) => !prevOpen)}
-                title={`${open ? 'Close' : 'Open'} drawer`}
-              /> */}
         <View style={{ flexDirection: "row", alignSelf: 'flex-end', paddingVertical: 12, justifyContent: 'flex-end', alignItems: 'center' }}>
-
           <View style={styles.centerRow}>
             <SelectDropdown
               data={data.roomsOptions}
@@ -185,7 +165,7 @@ export default function App(room) {
           {/* <View style={styles.startRow}> */}
           <TouchableOpacity
             onPress={() => {
-              setOpen(true)
+              navigation.openDrawer() 
               setUpdate(false) }}>
             <Image source={images.options} style={styles.imageButtonUp} />
           </TouchableOpacity>
@@ -267,56 +247,6 @@ export default function App(room) {
           }}>
           <ModalDevice item={deviceEdit}/>
         </Modalize>
-        <Modal
-          animationType="fade"
-          transparent={false}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}>
-          <View style={{ flex: 1, justifyContent: 'center' }}>
-            <View style={{
-              backgroundColor: '#EDEFF2', borderWidth: 1, borderColor: 'black', borderRadius: 20, alignSelf: 'center', shadowColor: 'black',
-              shadowOffset: { width: 0, height: 2, }, shadowOpacity: 0.25, shadowRadius: 4, elevation: 15, height: 230
-            }}>
-              <View style={{ flexDirection: 'row', margin: 10, width: 300, height: 50 }}>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ flexDirection: "row", alignSelf: "center", paddingVertical: 12, fontFamily: 'Poppins_400Regular', fontSize: 18, color: 'black', left: 17 }}>
-                    Menu
-                  </Text>
-                </View>
-                <View style={{ width: 30, height: 30, justifyContent: 'flex-start', alignSelf: 'flex-start', alignItems: 'flex-end' }}>
-                  <TouchableOpacity
-                    onPress={() => setModalVisible(!modalVisible)}>
-                    <Image source={require('../assets/Images/close.png')} style={{ width: 21, height: 21, resizeMode: 'contain' }} />
-                  </TouchableOpacity>
-                </View>
-              </View>
-
-              <View style={styles.buttonMenu}>
-                <TouchableOpacity style={{ width: 290, height: 40, alignContent: 'center', justifyContent: 'center', alignItems: 'center' }}
-                  onPress={() => navigation.navigate('Home', { id: 110 })}>
-                  <Text>HOME</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.buttonMenu}>
-                <TouchableOpacity style={{ width: 290, height: 40, alignContent: 'center', justifyContent: 'center', alignItems: 'center' }}
-                onPress={() => navigation.navigate('Config', { id: 195 })}>
-                <Text>CONFIG</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.buttonMenu}>
-                <TouchableOpacity style={{ width: 290, height: 40, alignContent: 'center', justifyContent: 'center', alignItems: 'center' }}
-                  onPress={() => alert("Button pressed")} >
-                  <Text>
-                    LOGOUT
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </Modal>
-        </Drawer>
       </SafeAreaView>
     );
   }

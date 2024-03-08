@@ -75,7 +75,6 @@ export default function Home({ navigation }) {
   const [roomInfos, setRoomInfos] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [open, setOpen] = useState(false);
-  // navigation.openDrawer();
   // navigation.closeDrawer();
 
   useEffect(() => {
@@ -93,30 +92,18 @@ export default function Home({ navigation }) {
 
   return (
     <SafeAreaView style={{ padding: 10, justifyContent: 'center', paddingBottom: 10, paddingTop: inset.top, backgroundColor: 'white', ...styles.container }}>
-      <Drawer
-        open={open}
-        onOpen={() => setOpen(true)}
-        onClose={() => setOpen(false)}
-        drawerType='slide'
-        // overlayStyle={{ width: 15 }}
-        drawerStyle = {{backgroundColor: 'white', width: 230, justifyContent: 'flex-end', alignContent: 'flex-end', alignItems: 'flex-end', alignSelf: 'flex-end'}}
-        // drawerPosition='right'
-        renderDrawerContent={() => {
-          return  <ModMenu navigationParam={navigation} screenName={"Home"} />
-        }}>
-       
-        <View style={{ flexDirection: "row", alignSelf: 'flex-start', paddingVertical: 12, justifyContent: 'flex-start', alignItems: 'center' }}>
-          <TouchableOpacity
-            onPress={() => { setOpen(true) }}>
-            <Image source={images.options} style={styles.imageButtonUp} />
-          </TouchableOpacity>
+        <View style={{ flexDirection: "row", alignSelf: 'flex-end', paddingVertical: 12, justifyContent: 'flex-start', alignItems: 'center' }}>
 
           <View style={{ alignItems: 'center', width: 299, justifyContent: 'center' }}>
-            <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 20 }}>
+            <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 20, left:12 }}>
               Cômodos
             </Text>
           </View>
 
+          <TouchableOpacity
+            onPress={() => { navigation.openDrawer() }}>
+            <Image source={images.options} style={styles.imageButtonUp} />
+          </TouchableOpacity>
         </View>
 
         <View style={{ backgroundColor: '#E8E8E8', flex: 1, width: '99%', borderRadius: 15, flexDirection: 'row', alignSelf: 'center', justifyContent: 'center' }}>
@@ -130,56 +117,6 @@ export default function Home({ navigation }) {
             />
           </View>
         </View>
-        <Modal
-          animationType="fade"
-          transparent={false}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}>
-          <View style={{ flex: 1, justifyContent: 'center' }}>
-            <View style={{
-              backgroundColor: '#EDEFF2', borderWidth: 1, borderColor: 'black', borderRadius: 20, alignSelf: 'center', shadowColor: 'black',
-              shadowOffset: { width: 0, height: 2, }, shadowOpacity: 0.25, shadowRadius: 4, elevation: 15, height: 230
-            }}>
-              <View style={{ flexDirection: 'row', margin: 10, width: 300, height: 50 }}>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ flexDirection: "row", alignSelf: "center", paddingVertical: 12, fontFamily: 'Poppins_400Regular', fontSize: 18, color: 'black', left: 17 }}>
-                    Menu
-                  </Text>
-                </View>
-                <View style={{ width: 30, height: 30, justifyContent: 'flex-start', alignSelf: 'flex-start', alignItems: 'flex-end' }}>
-                  <TouchableOpacity
-                    onPress={() => setModalVisible(!modalVisible)}>
-                    <Image source={require('../assets/Images/close.png')} style={{ width: 21, height: 21, resizeMode: 'contain' }} />
-                  </TouchableOpacity>
-                </View>
-              </View>
-
-              <View style={styles.buttonMenu}>
-                <TouchableOpacity style={{ width: 290, height: 40, alignContent: 'center', justifyContent: 'center', alignItems: 'center' }}
-                  onPress={() => navigation.navigate('Home', { id: 110 })}>
-                  <Text>HOME</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.buttonMenu}>
-                <TouchableOpacity style={{ width: 290, height: 40, alignContent: 'center', justifyContent: 'center', alignItems: 'center' }}
-                  onPress={() => navigation.navigate('Config', { id: 195 })}>
-                  <Text>CONFIG</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.buttonMenu}>
-                <TouchableOpacity style={{ width: 290, height: 40, alignContent: 'center', justifyContent: 'center', alignItems: 'center' }}
-                  onPress={() => alert("Button pressed")} >
-                  <Text>
-                    LOGOUT
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </Modal>
-      </Drawer>
     </SafeAreaView>
   );
 }
