@@ -32,18 +32,17 @@ export default function App() {
   return (
     <NavigationContainer>
     <Drawer.Navigator 
-
-      drawerContent={(props) => <ModMenu/>}
+      drawerContent={(props) => <ModMenu {...props} />}
       screenOptions={{
         // drawerStyle: {width: '65%',paddingTop: 15,height: 50, backgroundColor: "black", justifyContent: 'flex-end', alignItems: 'flex-end', alignContent: 'flex-end', alignSelf: 'flex-end'},
-        // overlayColor: 'pink',
-        drawerHideStatusBarOnOpen: false,
-        drawerStatusBarAnimation: 'slide'
-
-
+        // overlayColor: '#7f7f7f',
+        // overlayColor: 'transparent',
+        // drawerHideStatusBarOnOpen: false,
+        // drawerStatusBarAnimation: 'fade'
       }}
-      >
-      <Drawer.Group screenOptions={{ headerShown: false, drawerPosition: 'right', drawerType: 'slide' }}>
+      > 
+      {/* ENTENDAAAAAAAAAAAAAAAAAAAA ESSSSSSSSSSSSSSSAAAAAAAAAAAAAA PORRRRRRRRRRRRRRRRRAAAAAAAAAAAAAAAA */}
+      <Drawer.Group screenOptions={{ headerShown: false, drawerPosition: 'right', drawerType: 'front', }}>
         <Drawer.Screen name="Home" component={Home} />
         <Drawer.Screen name="Login" component={Login} />
         <Drawer.Screen name="Menu" component={Menu} />

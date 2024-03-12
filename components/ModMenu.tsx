@@ -4,13 +4,17 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Modal, FlatList, SafeAreaView, StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, Pressable, Alert, Button } from 'react-native';
-
+import {
+   DrawerContentScrollView,
+   DrawerItemList,
+   DrawerItem
+} from '@react-navigation/drawer';
 import styles from '../styles/styles';
 
 // Defina o tipo da navegação
-type NavigationType = NavigationProp<ParamList>; 
+type NavigationType = NavigationProp<ParamList>;
 
-export default function ModMenu() {
+export default function ModMenu(props) {
    const navigation: NavigationType = useNavigation<NavigationType>();
    const inset = useSafeAreaInsets()
    const windowWidth = Dimensions.get('window').width;
@@ -18,24 +22,32 @@ export default function ModMenu() {
 
 
    return (
-      <SafeAreaView style={{ padding: 10, paddingBottom: 10, paddingTop: inset.top, backgroundColor: 'white', width: 230, height: windowHeight }}>
-         <Button
-            title="Back"
-            onPress={() => {
-               navigation.navigate('Config');
-            }}
-         />
-         <Button
-            title={`Go to Login`}
-            onPress={() => { navigation.navigate('Login') }}
-         />
-         <Button
-            title={`Go to Home`}
-            onPress={() => { navigation.navigate('Home') }}
-         />
+      <SafeAreaView style={{ paddingBottom: 10, paddingTop: inset.top, ...styles.container, backgroundColor: 'transparent',  }}>
+         <View style={{ paddingTop: inset.top, backgroundColor: 'blue', height: windowHeight, borderTopLeftRadius:10  }}>
+            <DrawerContentScrollView {...props}>
+               <DrawerItemList {...props} />
+               <DrawerItem
+                  label="Help"
+                  onPress={() => {}}
+               />
+                <DrawerItem
+               label="Back"
+               onPress={() => {
+                  navigation.navigate('Config');
+               }}
+               />
+            <DrawerItem
+               label={`Go to Logaain`}
+               onPress={() => { navigation.navigate('Login') }}
+            />
+            <DrawerItem
+               label={`Go to Home`}
+               onPress={() => { navigation.navigate('Home') }}
+               />
+
+            </DrawerContentScrollView>
+         </View>
       </SafeAreaView>
-
-
    );
 }
 
