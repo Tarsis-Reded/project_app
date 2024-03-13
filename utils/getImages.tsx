@@ -36,7 +36,9 @@ const images = {
     diningRoom :require('../assets/Images/sala-de-jantar.png'),   
     kitchen :require('../assets/Images/cozinha.png'),
     gamesRoom :require('../assets/Images/quarto-jogos.png'),
-    gamesRoomA :require('../assets/Images/quarto-de-jogos.png')
+    gamesRoomA :require('../assets/Images/quarto-de-jogos.png'),
+    perfilPhoto :require('../assets/Images/person.png')
+
 }
 
 export {images};

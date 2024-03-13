@@ -34,9 +34,10 @@ export default function App() {
     <Drawer.Navigator 
       drawerContent={(props) => <ModMenu {...props} />}
       screenOptions={{
+         drawerStyle: {width: '60%'},
         // drawerStyle: {width: '65%',paddingTop: 15,height: 50, backgroundColor: "black", justifyContent: 'flex-end', alignItems: 'flex-end', alignContent: 'flex-end', alignSelf: 'flex-end'},
         // overlayColor: '#7f7f7f',
-        // overlayColor: 'transparent',
+        overlayColor: 'transparent',
         // drawerHideStatusBarOnOpen: false,
         // drawerStatusBarAnimation: 'fade'
       }}

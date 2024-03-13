@@ -1,8 +1,9 @@
-import * as React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { images } from '../utils/getImages';
 import { Modal, FlatList, SafeAreaView, StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, Pressable, Alert, Button } from 'react-native';
 import {
    DrawerContentScrollView,
@@ -10,6 +11,11 @@ import {
    DrawerItem
 } from '@react-navigation/drawer';
 import styles from '../styles/styles';
+import {
+   useFonts,
+   Poppins_400Regular,
+   Poppins_500Medium,
+} from '@expo-google-fonts/poppins';
 
 // Defina o tipo da navegação
 type NavigationType = NavigationProp<ParamList>;
@@ -19,34 +25,64 @@ export default function ModMenu(props) {
    const inset = useSafeAreaInsets()
    const windowWidth = Dimensions.get('window').width;
    const windowHeight = Dimensions.get('window').height;
-
+   const [option, setOption] = useState('');
 
    return (
-      <SafeAreaView style={{ paddingBottom: 10, paddingTop: inset.top, ...styles.container, backgroundColor: 'transparent',  }}>
-         <View style={{ paddingTop: inset.top, backgroundColor: 'blue', height: windowHeight, borderTopLeftRadius:10  }}>
-            <DrawerContentScrollView {...props}>
-               <DrawerItemList {...props} />
+      <SafeAreaView style={{ paddingBottom: 10, paddingTop: inset.top + 5, ...styles.container, backgroundColor: 'transparent', flex: 1 }}>
+         <View style={{ paddingTop: inset.top, backgroundColor: '#bababa', height: windowHeight, borderTopLeftRadius: 18 }}>
+            <View style={{ width: 190, justifyContent: 'flex-start', alignContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
+               <View style={{ height: 120 }}>
+                  <Image
+                     style={{ backgroundColor: 'white', height: 110, borderRadius: 54, width: 110, borderWidth: 2, borderColor: 'black', }}
+                     source={images.perfilPhoto} />
+               </View>
+               <View style={{ alignContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
+                  <Text style={{ fontFamily: 'Poppins_400Regular', color: 'black', fontSize: 16 }}>
+                     Tarsis Reded
+                  </Text>
+               </View>
+               <View style={{ alignContent: 'center', alignItems: 'center', alignSelf: 'center', }}>
+                  <Text style={{ fontFamily: 'Poppins_400Regular', color: 'black', fontSize: 16 }}>
+                     tarsisrdd@hotmail.com
+                  </Text>
+               </View>
+            </View>
+            <DrawerContentScrollView {...props} activeTintColor=' black'>
+
                <DrawerItem
+                  focused={option == 'Help'}
                   label="Help"
-                  onPress={() => {}}
+                  onPress={() => { setOption('Help') }}
                />
-                <DrawerItem
-               label="Back"
-               onPress={() => {
-                  navigation.navigate('Config');
-               }}
+               <DrawerItem
+                  focused={option == 'Config'}
+                  pressColor='black'
+                  label="Configuração"
+                  onPress={() => {
+                     setOption('Config')
+                     navigation.navigate('Config');
+                  }}
                />
-            <DrawerItem
-               label={`Go to Logaain`}
-               onPress={() => { navigation.navigate('Login') }}
-            />
-            <DrawerItem
-               label={`Go to Home`}
-               onPress={() => { navigation.navigate('Home') }}
+               <DrawerItem
+                  label={`Login`}
+                  focused={option == 'Login'}
+                  onPress={() => {
+                     setOption('Login')
+                     navigation.navigate('Login')
+                  }}
+               />
+               <DrawerItem
+                  focused={option == 'Home'}
+                  label={`Home`}
+                  onPress={() => {
+                     setOption('Home')
+                     navigation.navigate('Home')
+                  }}
                />
 
             </DrawerContentScrollView>
          </View>
+
       </SafeAreaView>
    );
 }
@@ -58,48 +94,3 @@ type ParamList = {
    Profile: { userId: string };
    Settings: { theme: 'light' | 'dark' };
 };
-
-
-
-// import React, { useState, useEffect, useRef } from 'react';
-// // import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-// import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-// import { Modal, FlatList, SafeAreaView, StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, Pressable, Alert, Button } from 'react-native';
-// import { useNavigation } from '@react-navigation/native';
-
-
-// export default function ModMenu({ screenName }) {
-
-//    const navigation = useNavigation();
-
-//    const [teste] = useState(navigation);
-
-//    console.log("teste", navigation)
-//    console.log("teste", teste)
-//    const inset = useSafeAreaInsets()
-//    const windowWidth = Dimensions.get('window').width;
-//    const windowHeight = Dimensions.get('window').height;
-
-//    return (
-//       <SafeAreaView style={{ padding: 10, paddingBottom: 10, paddingTop: inset.top, backgroundColor: 'white', width: 230, height: windowHeight }}>
-//          <Button
-//       title="Back"
-//       onPress={() => {
-//         navigation.navigate('Config');
-//       }}
-//     />
-//          {/* <Button
-//        title={`Go to Login`}
-//        onPress={() => {navigation.navigate('Login')}}
-//        />
-//     <Button
-//        title={`Go to Home`}
-//        onPress={() => {navigation.navigate('Home')}}
-//     />
-//     <Button
-//        title={`Go to`}
-//         onPress={() => {navigation.navigate('Menu', { room: 'Sala'})}}
-//     /> */}
-//       </SafeAreaView>
-//    );
-// }
