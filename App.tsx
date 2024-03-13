@@ -21,14 +21,6 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 export default function App() {
-
-  function CustomDrawerContent(props) {
-    return (
-      <DrawerContentScrollView {...props}>
-        <DrawerItem label="Help" onPress={() => alert('Link to help')} />
-      </DrawerContentScrollView>
-    );
-  }
   return (
     <NavigationContainer>
     <Drawer.Navigator 
@@ -42,7 +34,6 @@ export default function App() {
         // drawerStatusBarAnimation: 'fade'
       }}
       > 
-      {/* ENTENDAAAAAAAAAAAAAAAAAAAA ESSSSSSSSSSSSSSSAAAAAAAAAAAAAA PORRRRRRRRRRRRRRRRRAAAAAAAAAAAAAAAA */}
       <Drawer.Group screenOptions={{ headerShown: false, drawerPosition: 'right', drawerType: 'front', }}>
         <Drawer.Screen name="Home" component={Home} />
         <Drawer.Screen name="Login" component={Login} />

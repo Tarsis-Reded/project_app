@@ -1,3 +1,14 @@
+import { User } from '../Models/User';
+
+let user: User =  
+{
+    id: '01',
+    name: 'Tarsis Reded',
+    nickName: 'IBATS',
+    email: 'tarsisrdd@hotmail.com',
+    darkTheme: false,
+    isAdmin: false
+}
 
 let data = {
     roomsOptions:
@@ -115,4 +126,4 @@ let rooms = {
 // };
 
 
-export { data, rooms };
+export { data, rooms, user };

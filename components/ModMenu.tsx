@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { images } from '../utils/getImages';
+import { data, rooms, user } from '../utils/getData';
 import { Modal, FlatList, SafeAreaView, StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, Pressable, Alert, Button } from 'react-native';
 import {
    DrawerContentScrollView,
@@ -21,6 +22,7 @@ import {
 type NavigationType = NavigationProp<ParamList>;
 
 export default function ModMenu(props) {
+   console.log('TESTE', props)
    const navigation: NavigationType = useNavigation<NavigationType>();
    const inset = useSafeAreaInsets()
    const windowWidth = Dimensions.get('window').width;
@@ -37,23 +39,17 @@ export default function ModMenu(props) {
                      source={images.perfilPhoto} />
                </View>
                <View style={{ alignContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
-                  <Text style={{ fontFamily: 'Poppins_400Regular', color: 'black', fontSize: 16 }}>
-                     Tarsis Reded
+                  <Text style={{ fontFamily: 'Poppins_400Regular', color: 'black', fontSize: 16, fontWeight:'700'}}>
+                     {user.nickName ?? user.name}
                   </Text>
                </View>
                <View style={{ alignContent: 'center', alignItems: 'center', alignSelf: 'center', }}>
-                  <Text style={{ fontFamily: 'Poppins_400Regular', color: 'black', fontSize: 16 }}>
-                     tarsisrdd@hotmail.com
+                  <Text style={{ fontFamily: 'Poppins_400Regular', color: 'black', fontSize: 16, fontWeight:'700'}}>
+                     {user.email}
                   </Text>
                </View>
             </View>
             <DrawerContentScrollView {...props} activeTintColor=' black'>
-
-               <DrawerItem
-                  focused={option == 'Help'}
-                  label="Help"
-                  onPress={() => { setOption('Help') }}
-               />
                <DrawerItem
                   focused={option == 'Config'}
                   pressColor='black'
@@ -71,6 +67,11 @@ export default function ModMenu(props) {
                      navigation.navigate('Login')
                   }}
                />
+                  <DrawerItem
+                     focused={option == 'Help'}
+                     label="Help"
+                     onPress={() => { setOption('Help') }}
+                  />
                <DrawerItem
                   focused={option == 'Home'}
                   label={`Home`}
