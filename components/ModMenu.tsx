@@ -18,7 +18,6 @@ import {
    Poppins_500Medium,
 } from '@expo-google-fonts/poppins';
 
-// Defina o tipo da navegação
 type NavigationType = NavigationProp<ParamList>;
 
 export default function ModMenu(props) {
@@ -49,10 +48,11 @@ export default function ModMenu(props) {
                   </Text>
                </View>
             </View>
-            <DrawerContentScrollView {...props} activeTintColor=' black'>
+            <DrawerContentScrollView {...props} activeTintColor=' black' style = {{}}>
                <DrawerItem
                   focused={option == 'Config'}
                   pressColor='black'
+                  activeTintColor = 'black'
                   label="Configuração"
                   onPress={() => {
                      setOption('Config')
@@ -73,11 +73,11 @@ export default function ModMenu(props) {
                      onPress={() => { setOption('Help') }}
                   />
                <DrawerItem
-                  focused={option == 'Home'}
-                  label={`Home`}
+                  focused={option == 'HouseRooms'}
+                  label={`Cômodos`}
                   onPress={() => {
-                     setOption('Home')
-                     navigation.navigate('Home')
+                     setOption('HouseRooms')
+                     navigation.navigate('HouseRooms')
                   }}
                />
 
@@ -89,7 +89,7 @@ export default function ModMenu(props) {
 }
 
 type ParamList = {
-   Home: undefined;
+   HouseRooms: undefined;
    Config: undefined;
    Login: undefined;
    Profile: { userId: string };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, Button, Alert, Dimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from './views/Home';
+import HouseRooms from './views/HouseRooms';
 import Login from './views/Login';
 import Menu from './views/Menu';
 import Map from './views/Map';
@@ -35,7 +35,7 @@ export default function App() {
       }}
       > 
       <Drawer.Group screenOptions={{ headerShown: false, drawerPosition: 'right', drawerType: 'front', }}>
-        <Drawer.Screen name="Home" component={Home} />
+        <Drawer.Screen name="HouseRooms" component={HouseRooms} />
         <Drawer.Screen name="Login" component={Login} />
         <Drawer.Screen name="Menu" component={Menu} />
         <Drawer.Screen name="Map" component={Map} />
@@ -46,7 +46,7 @@ export default function App() {
     // <NavigationContainer>
     //   <Stack.Navigator>
     //     <Stack.Group screenOptions={{ headerShown: false }}> 
-    //       <Stack.Screen name="Home" component={Home} />
+    //       <Stack.Screen name="HouseRooms" component={HouseRooms} />
     //       <Stack.Screen name="Login" component={Login} />
     //       <Stack.Screen name="Menu" component={Menu} />
     //       <Stack.Screen name="Map" component={Map} />

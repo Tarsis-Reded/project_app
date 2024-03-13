@@ -220,7 +220,7 @@ export default function App(room) {
 
             <View style={{ flex: 1, paddingRight: 120 }}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Home', { id: 110 })}>
+                onPress={() => navigation.navigate('HouseRooms', { id: 110 })}>
                 <Image source={images.map} style={styles.imageButtonDown} />
               </TouchableOpacity>
             </View>

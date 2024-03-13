@@ -21,7 +21,7 @@ import {
   Poppins_500Medium,
 } from '@expo-google-fonts/poppins';
 
-export default function Home({ navigation }) {
+export default function HouseRooms({ navigation }) {
 
   const itemRoom = ({ item }) => {
     let imagePath;
@@ -153,7 +153,7 @@ export default function Home({ navigation }) {
 
 //     return (
 //       <SafeAreaView style={{ padding: 10, paddingBottom: 10, paddingTop: inset.top, ...styles.container }}>
-//          <Text>Esse é o componente Home</Text>
+//          <Text>Esse é o componente HouseRooms</Text>
 //                 <Button
 //                         title='Ir para Login'
 //                         onPress={() => navigation.navigate('Login',{
