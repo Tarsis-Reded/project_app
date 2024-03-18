@@ -225,7 +225,7 @@ export default function App(room) {
               </TouchableOpacity>
             </View>
             {/* abrir modal */}
-            <View style={{ flex: 1, paddingLeft: 110 }}>
+            <View style={{ flex: 1, paddingLeft: 120 }}>
               <TouchableOpacity
                 onPress={() => alert("Button pressed")}>
                 <Image source={images.add} style={styles.imageButtonDown} />

@@ -92,31 +92,40 @@ export default function HouseRooms({ navigation }) {
 
   return (
     <SafeAreaView style={{ padding: 10, justifyContent: 'center', paddingBottom: 10, paddingTop: inset.top, backgroundColor: 'white', ...styles.container }}>
-        <View style={{ flexDirection: "row", alignSelf: 'flex-end', paddingVertical: 12, justifyContent: 'flex-start', alignItems: 'center' }}>
+      <View style={{ flexDirection: "row", alignSelf: 'flex-end', paddingVertical: 12, justifyContent: 'flex-start', alignItems: 'center' }}>
 
-          <View style={{ alignItems: 'center', width: 299, justifyContent: 'center' }}>
-            <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 20, left:12 }}>
-              Cômodos
-            </Text>
-          </View>
-
-          <TouchableOpacity
-            onPress={() => { navigation.openDrawer() }}>
-            <Image source={images.options} style={styles.imageButtonUp} />
-          </TouchableOpacity>
+        <View style={{ alignItems: 'center', width: 299, justifyContent: 'center' }}>
+          <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 20, left: 12 }}>
+            Cômodos
+          </Text>
         </View>
 
-        <View style={{ backgroundColor: '#E8E8E8', flex: 1, width: '99%', borderRadius: 15, flexDirection: 'row', alignSelf: 'center', justifyContent: 'center' }}>
-          <View style={{ flexDirection: 'row', height: 620, borderRadius: 7, paddingTop: 10 }}>
-            <FlatList
-              data={roomInfos}
-              // extraData={update} 
-              numColumns={2}
-              renderItem={itemRoom}
-              keyExtractor={item => item.id}
-            />
+        <TouchableOpacity
+          onPress={() => { navigation.openDrawer() }}>
+          <Image source={images.options} style={styles.imageButtonUp} />
+        </TouchableOpacity>
+      </View>
+{/* alinhar no centro */}
+      <View style={{ backgroundColor: '#E8E8E8', flex: 1, width: '99%', borderRadius: 15, alignSelf: 'center' }}> 
+        <View style={{ flex: 1, flexDirection: 'row', height: 620, borderRadius: 7, paddingTop: 10}}>
+          <FlatList
+            data={roomInfos}
+            // extraData={update} 
+            numColumns={2}
+            renderItem={itemRoom}
+            keyExtractor={item => item.id}
+          />
+        </View>
+
+        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignContent: 'flex-end', paddingVertical: 15, paddingEnd: 15}}>
+          <View style={{  }}>
+            <TouchableOpacity
+              onPress={() => alert("Button pressed")}>
+              <Image source={images.add} style={styles.imageButtonDown} />
+            </TouchableOpacity>
           </View>
         </View>
+      </View>
     </SafeAreaView>
   );
 }

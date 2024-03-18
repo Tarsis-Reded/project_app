@@ -38,49 +38,68 @@ export default function ModMenu(props) {
                      source={images.perfilPhoto} />
                </View>
                <View style={{ alignContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
-                  <Text style={{ fontFamily: 'Poppins_400Regular', color: 'black', fontSize: 16, fontWeight:'700'}}>
+                  <Text style={{ fontFamily: 'Poppins_400Regular', color: 'black', fontSize: 16, fontWeight: '700' }}>
                      {user.nickName ?? user.name}
                   </Text>
                </View>
                <View style={{ alignContent: 'center', alignItems: 'center', alignSelf: 'center', }}>
-                  <Text style={{ fontFamily: 'Poppins_400Regular', color: 'black', fontSize: 16, fontWeight:'700'}}>
+                  <Text style={{ fontFamily: 'Poppins_400Regular', color: 'black', fontSize: 16, fontWeight: '700' }}>
                      {user.email}
                   </Text>
                </View>
             </View>
-            <DrawerContentScrollView {...props} activeTintColor=' black' style = {{}}>
+            <DrawerContentScrollView {...props} activeTintColor=' black' style={{}}>
+               <DrawerItem
+                  labelStyle={{}}
+                  pressColor='black'
+                  activeTintColor='black'
+                  focused={option == 'HouseRooms'}
+                  label={'Cômodos'}
+                  onPress={() => {
+                     setOption('HouseRooms')
+                     navigation.navigate('HouseRooms')
+                  }}
+               />
+               <DrawerItem
+                  pressColor='black'
+                  activeTintColor='black'
+                  focused={option == 'Perfil'}
+                  label={'Perfil'}
+                  onPress={() => {
+                     setOption('Perfil')
+                     // navigation.navigate('HouseRooms')
+                  }}
+               />
                <DrawerItem
                   focused={option == 'Config'}
                   pressColor='black'
-                  activeTintColor = 'black'
+                  activeTintColor='black'
                   label="Configuração"
                   onPress={() => {
                      setOption('Config')
                      navigation.navigate('Config');
                   }}
                />
+
                <DrawerItem
-                  label={`Login`}
-                  focused={option == 'Login'}
+                  labelStyle={{color: '#ee5555'}}
+                  pressColor='red'
+                  activeTintColor='black'
+                  label={`LogOut`}
+                  focused={option == 'LogOut'}
                   onPress={() => {
                      setOption('Login')
-                     navigation.navigate('Login')
+                     alert("Sua sessão foi desconectada")
+                     // navigation.navigate('Login')
                   }}
                />
                   <DrawerItem
+                     pressColor='red'
+                     activeTintColor='black'
                      focused={option == 'Help'}
                      label="Help"
                      onPress={() => { setOption('Help') }}
                   />
-               <DrawerItem
-                  focused={option == 'HouseRooms'}
-                  label={`Cômodos`}
-                  onPress={() => {
-                     setOption('HouseRooms')
-                     navigation.navigate('HouseRooms')
-                  }}
-               />
-
             </DrawerContentScrollView>
          </View>
 
