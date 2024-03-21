@@ -5,7 +5,7 @@ import { images } from '../utils/getImages';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { Modal, Alert, Pressable, FlatList, SafeAreaView, StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 
-const ModalDevice = ({ item }) => {
+const EditDevice = ({ item }) => {
   const [curruntItem, setCurruntItem] = useState(item)
   const [selected, setSelected] = useState("");
   const [on, setOn] = useState(curruntItem.on);
@@ -126,4 +126,4 @@ const ModalDevice = ({ item }) => {
   );
 }
 
-export default ModalDevice;
+export default EditDevice;

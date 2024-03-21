@@ -21,7 +21,6 @@ import {
 type NavigationType = NavigationProp<ParamList>;
 
 export default function ModMenu(props) {
-   console.log('TESTE', props)
    const navigation: NavigationType = useNavigation<NavigationType>();
    const inset = useSafeAreaInsets()
    const windowWidth = Dimensions.get('window').width;

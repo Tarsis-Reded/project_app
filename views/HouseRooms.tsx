@@ -8,13 +8,11 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import AppLoading from 'expo-app-loading';
 import ToggleSwitch from 'toggle-switch-react-native';
 import { Modalize } from 'react-native-modalize';
-import ModalDevice from '../components/modalDevice';
+import AddItem from '../components/AddItems';
 import styles from '../styles/styles';
 import { Drawer } from 'react-native-drawer-layout';
 import ModalMenu from '../components/modalMenu';
 import ModMenu from '../components/ModMenu';
-
-
 import {
   useFonts,
   Poppins_400Regular,
@@ -73,12 +71,23 @@ export default function HouseRooms({ navigation }) {
   const inset = useSafeAreaInsets()
   const [devices, setDevices] = useState(data.devices);
   const [roomInfos, setRoomInfos] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
   const [open, setOpen] = useState(false);
+  const selectAdd = useRef<Modalize>(null);
   // navigation.closeDrawer();
+  const handlerAddOption = (option) => { /// criar um outro componente
+    if (option == 'room') {
+      return <AppLoading />;
+    } else {
+    }
+
+    // Alert.alert(`Adicionar ${tipo}`);
+    // Aqui você pode fazer o que for necessário com o tipo recebido (COMODO ou DISPOSITIVO)
+  };
+
 
   useEffect(() => {
     let dataRooms = []
+    selectAdd.current.open()
     for (const room of data.roomsHouse) {
       let roomInfo = {
         name: room.value, countDevices: devices.filter(element => element.partHome === room.room).length,
@@ -105,9 +114,9 @@ export default function HouseRooms({ navigation }) {
           <Image source={images.options} style={styles.imageButtonUp} />
         </TouchableOpacity>
       </View>
-{/* alinhar no centro */}
-      <View style={{ backgroundColor: '#E8E8E8', flex: 1, width: '99%', borderRadius: 15, alignSelf: 'center' }}> 
-        <View style={{ flex: 1, flexDirection: 'row', height: 620, borderRadius: 7, paddingTop: 10}}>
+      {/* alinhar no centro */}
+      <View style={{ backgroundColor: '#E8E8E8', flex: 1, width: '99%', borderRadius: 15, alignSelf: 'center' }}>
+        <View style={{ flex: 1, flexDirection: 'row', height: 620, borderRadius: 7, paddingTop: 10 }}>
           <FlatList
             data={roomInfos}
             // extraData={update} 
@@ -117,15 +126,31 @@ export default function HouseRooms({ navigation }) {
           />
         </View>
 
-        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignContent: 'flex-end', paddingVertical: 15, paddingEnd: 15}}>
-          <View style={{  }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignContent: 'flex-end', paddingVertical: 15, paddingEnd: 15 }}>
+          <View style={{}}>
             <TouchableOpacity
-              onPress={() => alert("Button pressed")}>
+              onPress={() => selectAdd.current.open()}>
               <Image source={images.add} style={styles.imageButtonDown} />
             </TouchableOpacity>
           </View>
         </View>
       </View>
+      <Modalize ref={selectAdd}
+        snapPoint={175}
+        modalHeight={175}
+        disableScrollIfPossible={true}
+        keyboardAvoidingBehavior={'height'}
+        // openAnimationConfig={} entender melhor isso 
+        withHandle={true}
+        scrollViewProps={{ showsHorizontalScrollIndicator: false, showsVerticalScrollIndicator: false }}
+      // onClosed={() => {
+      //   console.log('FUNCIONOU', modalVisible);
+      // setDeviceResults(data.devices.filter((room) => room.partHome === selectedRoom))
+      // setUpdate(true)
+      // }}
+      >
+        <AddItem option={handlerAddOption} />
+      </Modalize>
     </SafeAreaView>
   );
 }

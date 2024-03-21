@@ -8,7 +8,7 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import AppLoading from 'expo-app-loading';
 import ToggleSwitch from 'toggle-switch-react-native';
 import { Modalize } from 'react-native-modalize';
-import ModalDevice from '../components/modalDevice';
+import EditDevice from '../components/editDevice';
 import ModalMenu from '../components/modalMenu';
 import styles from '../styles/styles';
 import 'react-native-gesture-handler';
@@ -165,9 +165,10 @@ export default function App(room) {
           {/* <View style={styles.startRow}> */}
           <TouchableOpacity
             onPress={() => {
-              navigation.openDrawer() 
-              setUpdate(false) }}>
-            <Image source={images.options} style={styles.imageButtonUp} />
+              navigation.openDrawer()
+              setUpdate(false)
+            }}>
+            <Image source={images.options} style={{ width: 39, height: 39, resizeMode: 'contain' }} />
           </TouchableOpacity>
           {/* </View>  */}
         </View>
@@ -245,7 +246,7 @@ export default function App(room) {
             setDeviceResults(data.devices.filter((room) => room.partHome === selectedRoom))
             setUpdate(true)
           }}>
-          <ModalDevice item={deviceEdit}/>
+          <EditDevice item={deviceEdit} />
         </Modalize>
       </SafeAreaView>
     );
