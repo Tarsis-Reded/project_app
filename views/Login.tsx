@@ -4,7 +4,7 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import ToggleSwitch from 'toggle-switch-react-native';
 import { Modalize } from 'react-native-modalize';
-import ModalDevice from '../components/modalDevice';
+import ModalDevice from '../components/editDevice';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import 'react-native-gesture-handler';
 
