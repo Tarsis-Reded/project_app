@@ -5,7 +5,7 @@ import { images } from '../utils/getImages';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { Modal, Alert, Pressable, FlatList, SafeAreaView, StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, ScrollView, TextInput, Button } from 'react-native';
 
-const AddItem = ( {option} ) => {
+const OptionAdd = ( {option} ) => {
   // const {modalVisible} = props
   // const [curruntItem, setCurruntItem] = useState('')
   // const [selected, setSelected] = useState("");
@@ -35,4 +35,4 @@ const AddItem = ( {option} ) => {
   );
 }
 
-export default AddItem;
+export default OptionAdd;

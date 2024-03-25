@@ -8,7 +8,8 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import AppLoading from 'expo-app-loading';
 import ToggleSwitch from 'toggle-switch-react-native';
 import { Modalize } from 'react-native-modalize';
-import AddItem from '../components/AddItems';
+import OptionAdd from '../components/OptionAdd';
+import AddItem from '../components/AddItem';
 import styles from '../styles/styles';
 import { Drawer } from 'react-native-drawer-layout';
 import ModalMenu from '../components/modalMenu';
@@ -75,12 +76,13 @@ export default function HouseRooms({ navigation }) {
   const selectAdd = useRef<Modalize>(null);
   // navigation.closeDrawer();
   const handlerAddOption = (option) => { /// criar um outro componente
-    if (option == 'room') {
-      return <AppLoading />;
-    } else {
-    }
+    // if (option == 'room') {
+    //   return <AppLoading />;
+    // } else {
+    // }
 
-    // Alert.alert(`Adicionar ${tipo}`);
+    selectAdd.current.close();
+    Alert.alert(`Adicionar ${option}`);
     // Aqui você pode fazer o que for necessário com o tipo recebido (COMODO ou DISPOSITIVO)
   };
 
@@ -149,7 +151,7 @@ export default function HouseRooms({ navigation }) {
       // setUpdate(true)
       // }}
       >
-        <AddItem option={handlerAddOption} />
+        <OptionAdd option={AddItem} />
       </Modalize>
     </SafeAreaView>
   );
