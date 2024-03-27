@@ -9,7 +9,6 @@ import AppLoading from 'expo-app-loading';
 import ToggleSwitch from 'toggle-switch-react-native';
 import { Modalize } from 'react-native-modalize';
 import EditDevice from '../components/editDevice';
-import ModalMenu from '../components/modalMenu';
 import styles from '../styles/styles';
 import 'react-native-gesture-handler';
 import { Drawer } from 'react-native-drawer-layout';

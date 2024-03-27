@@ -9,10 +9,8 @@ import AppLoading from 'expo-app-loading';
 import ToggleSwitch from 'toggle-switch-react-native';
 import { Modalize } from 'react-native-modalize';
 import OptionAdd from '../components/OptionAdd';
-import AddItem from '../components/AddItem';
 import styles from '../styles/styles';
 import { Drawer } from 'react-native-drawer-layout';
-import ModalMenu from '../components/modalMenu';
 import ModMenu from '../components/ModMenu';
 import {
   useFonts,
@@ -74,6 +72,7 @@ export default function HouseRooms({ navigation }) {
   const [roomInfos, setRoomInfos] = useState([]);
   const [open, setOpen] = useState(false);
   const selectAdd = useRef<Modalize>(null);
+  const addRoom = useRef<Modalize>(null);
   // navigation.closeDrawer();
   const handlerAddOption = (option) => { /// criar um outro componente
     // if (option == 'room') {
@@ -151,7 +150,24 @@ export default function HouseRooms({ navigation }) {
       // setUpdate(true)
       // }}
       >
-        <OptionAdd option={AddItem} />
+        <OptionAdd option={addRoom} />
+      </Modalize>
+
+      <Modalize ref={addRoom}
+        snapPoint={175}
+        modalHeight={175}
+        disableScrollIfPossible={true}
+        keyboardAvoidingBehavior={'height'}
+        // openAnimationConfig={} entender melhor isso 
+        withHandle={true}
+        scrollViewProps={{ showsHorizontalScrollIndicator: false, showsVerticalScrollIndicator: false }}
+      // onClosed={() => {
+      //   console.log('FUNCIONOU', modalVisible);
+      // setDeviceResults(data.devices.filter((room) => room.partHome === selectedRoom))
+      // setUpdate(true)
+      // }}
+      >
+        <OptionAdd option={addRoom} />
       </Modalize>
     </SafeAreaView>
   );

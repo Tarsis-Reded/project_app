@@ -8,6 +8,7 @@ import Menu from './views/Menu';
 import Map from './views/Map';
 import Config from './views/Config';
 import ModMenu from './components/ModMenu';
+import AddItem from './components/AddItem';
 import { useWindowDimensions } from 'react-native';
 import {
   createDrawerNavigator,
@@ -40,6 +41,7 @@ export default function App() {
         <Drawer.Screen name="Menu" component={Menu} />
         <Drawer.Screen name="Map" component={Map} />
         <Drawer.Screen name="Config" component={Config} />
+        <Drawer.Screen name="AddItem" component={AddItem} />
       </Drawer.Group>
     </Drawer.Navigator>
   </NavigationContainer>

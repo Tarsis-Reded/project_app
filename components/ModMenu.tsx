@@ -5,6 +5,7 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { images } from '../utils/getImages';
 import { data, rooms, user } from '../utils/getData';
+import { NavigationType } from '../Models/ParamNav';
 import { Modal, FlatList, SafeAreaView, StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, Pressable, Alert, Button } from 'react-native';
 import {
    DrawerContentScrollView,
@@ -18,7 +19,6 @@ import {
    Poppins_500Medium,
 } from '@expo-google-fonts/poppins';
 
-type NavigationType = NavigationProp<ParamList>;
 
 export default function ModMenu(props) {
    const navigation: NavigationType = useNavigation<NavigationType>();
@@ -106,10 +106,10 @@ export default function ModMenu(props) {
    );
 }
 
-type ParamList = {
-   HouseRooms: undefined;
-   Config: undefined;
-   Login: undefined;
-   Profile: { userId: string };
-   Settings: { theme: 'light' | 'dark' };
-};
+// type ParamList = {
+//    HouseRooms: undefined;
+//    Config: undefined;
+//    Login: undefined;
+//    Profile: { userId: string };
+//    Settings: { theme: 'light' | 'dark' };
+// };
