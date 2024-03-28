@@ -29,9 +29,7 @@ const OptionAdd = ({option}) => {
       <View style={{ backgroundColor: 'white', borderColor: 'black', borderRadius: 20, alignSelf: 'center', alignItems: 'center', alignContent: 'center', }}>
         <View style={{ flex: 1, paddingTop: 20 , alignSelf: 'center', alignItems: 'center', alignContent: 'center', justifyContent: 'center', width: 300, height:75 }}>
         <TouchableOpacity
-            onPress={() => { option('room',)
-            navigation.navigate('AddItem')
-            }}>
+            onPress={() => { option('room',)}}>
             <Text style={{fontSize: 19}}> ADICIONAR CÔMODO</Text>
           </TouchableOpacity>
         </View>
@@ -39,7 +37,6 @@ const OptionAdd = ({option}) => {
        alignContent: 'center', justifyContent: 'center', width: 300, height:75 }}>
           <TouchableOpacity
             onPress={() => {
-               option('device'),
                navigation.navigate('AddItem')
               }}>
             <Text style={{fontSize: 19}}> ADICIONAR DISPOSITIVO</Text>

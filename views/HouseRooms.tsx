@@ -12,11 +12,7 @@ import OptionAdd from '../components/OptionAdd';
 import styles from '../styles/styles';
 import { Drawer } from 'react-native-drawer-layout';
 import ModMenu from '../components/ModMenu';
-import {
-  useFonts,
-  Poppins_400Regular,
-  Poppins_500Medium,
-} from '@expo-google-fonts/poppins';
+import AddRoom from '../components/addRoom';
 
 export default function HouseRooms({ navigation }) {
 
@@ -47,18 +43,18 @@ export default function HouseRooms({ navigation }) {
             navigation.navigate('Menu', { room: item.room })
           }}>
 
-          <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 15, paddingTop: 10 }}>{item.name}</Text>
+          <Text style={{ flexDirection: "row", alignSelf: "center",  fontSize: 15, paddingTop: 10 }}>{item.name}</Text>
           <View style={{ padding: 13 }}>
             <Image source={imagePath} style={{ width: 60, height: 60, resizeMode: 'contain' }} />
           </View>
           <View style={{ flexDirection: 'row', }}>
             <View style={{ flexDirection: 'column', }}>
-              {/* <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 15}}>Ligado</Text> */}
-              <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 15 }}>Dispositivos     </Text>
+              {/* <Text style={{ flexDirection: "row", alignSelf: "center",  fontSize: 15}}>Ligado</Text> */}
+              <Text style={{ flexDirection: "row", alignSelf: "center",  fontSize: 15 }}>Dispositivos     </Text>
             </View>
             <View style={{ flexDirection: 'column', }}>
-              {/* <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 15}}>{item.countActive}</Text> */}
-              <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 15 }}>{item.countDevices}</Text>
+              {/* <Text style={{ flexDirection: "row", alignSelf: "center",  fontSize: 15}}>{item.countActive}</Text> */}
+              <Text style={{ flexDirection: "row", alignSelf: "center",  fontSize: 15 }}>{item.countDevices}</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -72,7 +68,11 @@ export default function HouseRooms({ navigation }) {
   const [roomInfos, setRoomInfos] = useState([]);
   const [open, setOpen] = useState(false);
   const selectAdd = useRef<Modalize>(null);
-  const addRoom = useRef<Modalize>(null);
+  const RoomRef =  useRef<Modalize>(null);
+  const addRoom = (option) =>{
+    selectAdd.current.close();
+    RoomRef.current.open();
+  }
   // navigation.closeDrawer();
   const handlerAddOption = (option) => { /// criar um outro componente
     // if (option == 'room') {
@@ -105,7 +105,7 @@ export default function HouseRooms({ navigation }) {
       <View style={{ flexDirection: "row", alignSelf: 'flex-end', paddingVertical: 12, justifyContent: 'flex-start', alignItems: 'center' }}>
 
         <View style={{ alignItems: 'center', width: 299, justifyContent: 'center' }}>
-          <Text style={{ flexDirection: "row", alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 20, left: 12 }}>
+          <Text style={{ flexDirection: "row", alignSelf: "center",  fontSize: 20, left: 12 }}>
             Cômodos
           </Text>
         </View>
@@ -139,23 +139,19 @@ export default function HouseRooms({ navigation }) {
       <Modalize ref={selectAdd}
         snapPoint={175}
         modalHeight={175}
+        handleStyle = {{width: 100}}
         disableScrollIfPossible={true}
         keyboardAvoidingBehavior={'height'}
-        // openAnimationConfig={} entender melhor isso 
         withHandle={true}
         scrollViewProps={{ showsHorizontalScrollIndicator: false, showsVerticalScrollIndicator: false }}
-      // onClosed={() => {
-      //   console.log('FUNCIONOU', modalVisible);
-      // setDeviceResults(data.devices.filter((room) => room.partHome === selectedRoom))
-      // setUpdate(true)
-      // }}
       >
         <OptionAdd option={addRoom} />
       </Modalize>
 
-      <Modalize ref={addRoom}
-        snapPoint={175}
-        modalHeight={175}
+      <Modalize ref={RoomRef}
+        snapPoint={500}
+        modalHeight={500}
+        handleStyle = {{width: 100}}
         disableScrollIfPossible={true}
         keyboardAvoidingBehavior={'height'}
         // openAnimationConfig={} entender melhor isso 
@@ -167,53 +163,11 @@ export default function HouseRooms({ navigation }) {
       // setUpdate(true)
       // }}
       >
-        <OptionAdd option={addRoom} />
+        <AddRoom />
       </Modalize>
+
     </SafeAreaView>
   );
 }
 
-// import React, {  } from 'react';
-// import { Button, SafeAreaView, StyleSheet, Text } from 'react-native';
-// import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-// import AppLoading from 'expo-app-loading';
-// import {
-//   useFonts,
-//   Poppins_400Regular,
-//   Poppins_500Medium,
-// } from '@expo-google-fonts/poppins';
-
-// export default function App() {
-//   return (
-//     <SafeAreaProvider>
-//       <Application />
-//     </SafeAreaProvider>
-//   );
-// }
-
-// export function Application({navigation}) {
-//   let [fontsLoaded] = useFonts({
-//     Poppins_400Regular,
-//     Poppins_500Medium,
-//   });
-
-//   if (!fontsLoaded) {
-//     return <AppLoading />;
-//   } else {
-
-//     const inset = useSafeAreaInsets()
-
-//     return (
-//       <SafeAreaView style={{ padding: 10, paddingBottom: 10, paddingTop: inset.top, ...styles.container }}>
-//          <Text>Esse é o componente HouseRooms</Text>
-//                 <Button
-//                         title='Ir para Login'
-//                         onPress={() => navigation.navigate('Login',{
-//                         id: 30
-//                     })}
-//                 />
-//       </SafeAreaView>
-//     );
-//   }
-// };
 
