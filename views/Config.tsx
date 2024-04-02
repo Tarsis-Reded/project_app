@@ -1,3 +1,4 @@
+
 import React, {  } from 'react';
 import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';

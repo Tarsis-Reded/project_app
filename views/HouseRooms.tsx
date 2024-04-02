@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Modal, FlatList, SafeAreaView, StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, Pressable, Alert, Button } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { data, rooms, } from '../utils/getData';
+// import { helper } from '../utils/helpers';
 import { images } from '../utils/getImages';
 import SelectDropdown from 'react-native-select-dropdown';
 import { SelectList } from 'react-native-dropdown-select-list';
@@ -15,7 +16,7 @@ import ModMenu from '../components/ModMenu';
 import AddRoom from '../components/addRoom';
 
 export default function HouseRooms({ navigation }) {
-
+  
   const itemRoom = ({ item }) => {
     let imagePath;
     switch (item.room) {
@@ -43,18 +44,18 @@ export default function HouseRooms({ navigation }) {
             navigation.navigate('Menu', { room: item.room })
           }}>
 
-          <Text style={{ flexDirection: "row", alignSelf: "center",  fontSize: 15, paddingTop: 10 }}>{item.name}</Text>
+          <Text style={{ flexDirection: "row", alignSelf: "center", fontSize: 15, paddingTop: 10 }}>{item.name}</Text>
           <View style={{ padding: 13 }}>
             <Image source={imagePath} style={{ width: 60, height: 60, resizeMode: 'contain' }} />
           </View>
           <View style={{ flexDirection: 'row', }}>
             <View style={{ flexDirection: 'column', }}>
               {/* <Text style={{ flexDirection: "row", alignSelf: "center",  fontSize: 15}}>Ligado</Text> */}
-              <Text style={{ flexDirection: "row", alignSelf: "center",  fontSize: 15 }}>Dispositivos     </Text>
+              <Text style={{ flexDirection: "row", alignSelf: "center", fontSize: 15 }}>Dispositivos     </Text>
             </View>
             <View style={{ flexDirection: 'column', }}>
               {/* <Text style={{ flexDirection: "row", alignSelf: "center",  fontSize: 15}}>{item.countActive}</Text> */}
-              <Text style={{ flexDirection: "row", alignSelf: "center",  fontSize: 15 }}>{item.countDevices}</Text>
+              <Text style={{ flexDirection: "row", alignSelf: "center", fontSize: 15 }}>{item.countDevices}</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -68,8 +69,10 @@ export default function HouseRooms({ navigation }) {
   const [roomInfos, setRoomInfos] = useState([]);
   const [open, setOpen] = useState(false);
   const selectAdd = useRef<Modalize>(null);
-  const RoomRef =  useRef<Modalize>(null);
-  const addRoom = (option) =>{
+  const RoomRef = useRef<Modalize>(null);
+
+  const addRoom = (option) => {
+    // helper(false)
     selectAdd.current.close();
     RoomRef.current.open();
   }
@@ -88,7 +91,7 @@ export default function HouseRooms({ navigation }) {
 
   useEffect(() => {
     let dataRooms = []
-    selectAdd.current.open()
+    RoomRef.current.open()
     for (const room of data.roomsHouse) {
       let roomInfo = {
         name: room.value, countDevices: devices.filter(element => element.partHome === room.room).length,
@@ -99,13 +102,12 @@ export default function HouseRooms({ navigation }) {
       setRoomInfos(dataRooms)
     }
   }, [rooms])
-
   return (
     <SafeAreaView style={{ padding: 10, justifyContent: 'center', paddingBottom: 10, paddingTop: inset.top, backgroundColor: 'white', ...styles.container }}>
       <View style={{ flexDirection: "row", alignSelf: 'flex-end', paddingVertical: 12, justifyContent: 'flex-start', alignItems: 'center' }}>
 
         <View style={{ alignItems: 'center', width: 299, justifyContent: 'center' }}>
-          <Text style={{ flexDirection: "row", alignSelf: "center",  fontSize: 20, left: 12 }}>
+          <Text style={{ flexDirection: "row", alignSelf: "center", fontSize: 20, left: 12 }}>
             Cômodos
           </Text>
         </View>
@@ -130,7 +132,10 @@ export default function HouseRooms({ navigation }) {
         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignContent: 'flex-end', paddingVertical: 15, paddingEnd: 15 }}>
           <View style={{}}>
             <TouchableOpacity
-              onPress={() => selectAdd.current.open()}>
+              onPress={() => {
+                // helper(false)
+                selectAdd.current.open()
+              }}>
               <Image source={images.add} style={styles.imageButtonDown} />
             </TouchableOpacity>
           </View>
@@ -139,11 +144,14 @@ export default function HouseRooms({ navigation }) {
       <Modalize ref={selectAdd}
         snapPoint={175}
         modalHeight={175}
-        handleStyle = {{width: 100}}
+        handleStyle={{ width: 100 }}
         disableScrollIfPossible={true}
         keyboardAvoidingBehavior={'height'}
         withHandle={true}
         scrollViewProps={{ showsHorizontalScrollIndicator: false, showsVerticalScrollIndicator: false }}
+        // onClosed={() => {
+        //   setSwipe(true)
+        // }}
       >
         <OptionAdd option={addRoom} />
       </Modalize>
@@ -151,17 +159,15 @@ export default function HouseRooms({ navigation }) {
       <Modalize ref={RoomRef}
         snapPoint={500}
         modalHeight={500}
-        handleStyle = {{width: 100}}
+        handleStyle={{ width: 100 }}
         disableScrollIfPossible={true}
         keyboardAvoidingBehavior={'height'}
         // openAnimationConfig={} entender melhor isso 
         withHandle={true}
         scrollViewProps={{ showsHorizontalScrollIndicator: false, showsVerticalScrollIndicator: false }}
-      // onClosed={() => {
-      //   console.log('FUNCIONOU', modalVisible);
-      // setDeviceResults(data.devices.filter((room) => room.partHome === selectedRoom))
-      // setUpdate(true)
-      // }}
+        onClosed={() => {
+          // helper(true)
+        }}
       >
         <AddRoom />
       </Modalize>

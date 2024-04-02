@@ -24,7 +24,8 @@ const AddRoom = () => {
         <View style={{height: 50, borderBottomWidth:1, borderColor: "#cccccc", width: windowWidth-50, alignContent: 'center', alignItems: 'center'}}>
             <Text style={{fontSize: 20}}>Adicionar Cômodo</Text>
         </View>
-        <View style={{flex: 1,backgroundColor: 'white'}}>
+        <View style={{flex: 1,backgroundColor: 'black'}}>
+          <Text>Name</Text>
         </View>
     </View>
   );
