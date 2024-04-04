@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Modal, FlatList, SafeAreaView, StyleSheet, Text, Image, View, Dimensions, TouchableOpacity, Pressable, Alert, Button } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { data, rooms, } from '../utils/getData';
-// import { helper } from '../utils/helpers';
+import {helper} from '../utils/helpers';
 import { images } from '../utils/getImages';
 import SelectDropdown from 'react-native-select-dropdown';
 import { SelectList } from 'react-native-dropdown-select-list';
@@ -70,9 +70,8 @@ export default function HouseRooms({ navigation }) {
   const [open, setOpen] = useState(false);
   const selectAdd = useRef<Modalize>(null);
   const RoomRef = useRef<Modalize>(null);
-
+  const nav = navigation; 
   const addRoom = (option) => {
-    // helper(false)
     selectAdd.current.close();
     RoomRef.current.open();
   }
@@ -91,7 +90,7 @@ export default function HouseRooms({ navigation }) {
 
   useEffect(() => {
     let dataRooms = []
-    RoomRef.current.open()
+    RoomRef.current.open();
     for (const room of data.roomsHouse) {
       let roomInfo = {
         name: room.value, countDevices: devices.filter(element => element.partHome === room.room).length,
@@ -118,8 +117,8 @@ export default function HouseRooms({ navigation }) {
         </TouchableOpacity>
       </View>
       {/* alinhar no centro */}
-      <View style={{ backgroundColor: '#E8E8E8', flex: 1, width: '99%', borderRadius: 15, alignSelf: 'center' }}>
-        <View style={{ flex: 1, flexDirection: 'row', height: 620, borderRadius: 7, paddingTop: 10 }}>
+      <View style={{ backgroundColor: '#E8E8E8', flex: 1, width: '99%', borderRadius: 15, alignSelf: 'center', }}>
+        <View style={{ flex: 1, flexDirection: 'column', paddingTop: 10 , height: 620, borderRadius: 7, alignSelf: 'center'}}>
           <FlatList
             data={roomInfos}
             // extraData={update} 
@@ -133,7 +132,6 @@ export default function HouseRooms({ navigation }) {
           <View style={{}}>
             <TouchableOpacity
               onPress={() => {
-                // helper(false)
                 selectAdd.current.open()
               }}>
               <Image source={images.add} style={styles.imageButtonDown} />
@@ -142,6 +140,9 @@ export default function HouseRooms({ navigation }) {
         </View>
       </View>
       <Modalize ref={selectAdd}
+        onOpen={() => {
+          helper(nav, false)
+        }}
         snapPoint={175}
         modalHeight={175}
         handleStyle={{ width: 100 }}
@@ -149,14 +150,20 @@ export default function HouseRooms({ navigation }) {
         keyboardAvoidingBehavior={'height'}
         withHandle={true}
         scrollViewProps={{ showsHorizontalScrollIndicator: false, showsVerticalScrollIndicator: false }}
-        // onClosed={() => {
-        //   setSwipe(true)
-        // }}
+        onClose={() => {
+          helper(nav, true)
+        }}
       >
         <OptionAdd option={addRoom} />
       </Modalize>
 
       <Modalize ref={RoomRef}
+        onOpen={() => {
+          helper(nav, false)
+        }}
+        onOpened={() => {
+          helper(nav, false)
+        }}
         snapPoint={500}
         modalHeight={500}
         handleStyle={{ width: 100 }}
@@ -165,8 +172,8 @@ export default function HouseRooms({ navigation }) {
         // openAnimationConfig={} entender melhor isso 
         withHandle={true}
         scrollViewProps={{ showsHorizontalScrollIndicator: false, showsVerticalScrollIndicator: false }}
-        onClosed={() => {
-          // helper(true)
+        onClose={() => {
+          helper(nav, true)
         }}
       >
         <AddRoom />
