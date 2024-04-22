@@ -25,22 +25,27 @@ const AddRoom = () => {
       <View style={{ height: 50, borderBottomWidth: 1, borderColor: "#cccccc", width: windowWidth - 50, alignContent: 'center', alignItems: 'center' }}>
         <Text style={{ fontSize: 20 }}>Adicionar Cômodo</Text>
       </View>
-      <View style={{ flex: 1, width: windowWidth - 20, alignItems: 'center', alignContent: 'center', alignSelf: 'center' }}>
-        <View style={{ paddingTop: 30}}>
-        <Text style={{ alignSelf: "flex-start", fontFamily: 'Poppins_400Regular', fontSize: 19, color: 'black', left: 15 }}>
+      <View style={{ flex: 1, width: windowWidth - 20 }}>
+        <View style={{ alignContent: 'center', justifyContent: 'center', height: 50}}>
+          <Text style={{ alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 19, color: 'black'}}>
             Name</Text>
         </View>
         <TextInput
-            style={{ height: 42, width: 350, borderWidth: 1,borderColor: '#7f7f7f', borderRadius: 15, paddingTop: 10, backgroundColor: 'white' }}
-            onChangeText={setNameRoom}
-            defaultValue={nameRoom}
-            // onEndEditing={() => {
-            //   curruntItem.title = name
-            // }}
-            value={nameRoom}
-            // keyboardType="numeric"
-            // onChangeText={() => { console.log("SHDIJABD") }}
-          />
+          style={{height: 42, width: 350, borderWidth: 1, padding: 6,  borderColor: '#7f7f7f', borderRadius: 15, backgroundColor: 'white', alignSelf: "center"}}
+          onChangeText={setNameRoom}
+          defaultValue={nameRoom}
+          textAlign='center'
+          // onEndEditing={() => {
+          //   curruntItem.title = name
+          // }}
+          value={nameRoom}
+        // keyboardType="numeric"
+        // onChangeText={() => { console.log("SHDIJABD") }}
+        />
+        <View style={{ paddingTop: 10, alignContent: 'center', justifyContent: 'center', height: 50}}>
+          <Text style={{ alignSelf: "center", fontFamily: 'Poppins_400Regular', fontSize: 19, color: 'black'}}>
+            Selecione um icone</Text>
+        </View>
 
       </View>
     </View>
