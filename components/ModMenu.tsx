@@ -29,7 +29,7 @@ export default function ModMenu(props) {
 
    return (
       <SafeAreaView style={{ paddingBottom: 10, paddingTop: inset.top + 5, ...styles.container, backgroundColor: 'transparent', flex: 1 }}>
-         <View style={{ paddingTop: inset.top, backgroundColor: '#bababa', height: windowHeight, borderTopLeftRadius: 18 }}>
+         <View style={{ paddingTop: inset.top, backgroundColor: '#2a2a2a', height: windowHeight, borderTopLeftRadius: 18 }}>
             <View style={{ width: 190, justifyContent: 'flex-start', alignContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
                <View style={{ height: 120 }}>
                   <Image

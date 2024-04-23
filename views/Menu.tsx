@@ -12,6 +12,9 @@ import EditDevice from '../components/editDevice';
 import styles from '../styles/styles';
 import 'react-native-gesture-handler';
 import { Drawer } from 'react-native-drawer-layout';
+import AddRoom from '../components/addRoom';
+import { helper } from '../utils/helpers';
+import OptionAdd from '../components/OptionAdd';
 
 // const dataRooms = rooms.dataRooms;
 
@@ -42,6 +45,12 @@ export default function App(room) {
   const [update, setUpdate] = useState(false);
   const [roomsSearch, RoomsSearch] = useState(rooms.dataRooms);
   const [roomsResults, RoomsResults] = useState(rooms.dataRooms);
+  const selectAdd = useRef<Modalize>(null);
+  const RoomRef = useRef<Modalize>(null);
+  const addRoom = (option) => {
+    selectAdd.current.close();
+    RoomRef.current.open();
+  }
 
   useEffect(() => {
     devices = data.devices.filter((room) => room.partHome === selectedRoom)
@@ -227,7 +236,7 @@ export default function App(room) {
             {/* abrir modal */}
             <View style={{ flex: 1, paddingLeft: 120 }}>
               <TouchableOpacity
-                onPress={() => alert("Button pressed")}>
+                onPress={() => selectAdd.current.open()}>
                 <Image source={images.add} style={styles.imageButtonDown} />
               </TouchableOpacity>
             </View>
@@ -246,6 +255,47 @@ export default function App(room) {
             setUpdate(true)
           }}>
           <EditDevice item={deviceEdit} />
+        </Modalize>
+        <Modalize ref={selectAdd}
+          onOpen={() => {
+            helper(navigation, false)
+          }}
+          snapPoint={175}
+          modalHeight={175}
+          handleStyle={{ width: 100 }}
+          disableScrollIfPossible={true}
+          keyboardAvoidingBehavior={'height'}
+          withHandle={true}
+          scrollViewProps={{ showsHorizontalScrollIndicator: false, showsVerticalScrollIndicator: false }}
+          onClose={() => {
+            helper(navigation, true)
+          }}
+        >
+          <OptionAdd option={addRoom} />
+
+
+        </Modalize>
+
+        <Modalize ref={RoomRef}
+          onOpen={() => {
+            helper(navigation, false)
+          }}
+          onOpened={() => {
+            helper(navigation, false)
+          }}
+          snapPoint={500}
+          modalHeight={500}
+          handleStyle={{ width: 100 }}
+          disableScrollIfPossible={true}
+          keyboardAvoidingBehavior={'height'}
+          // openAnimationConfig={} entender melhor isso 
+          withHandle={true}
+          scrollViewProps={{ showsHorizontalScrollIndicator: false, showsVerticalScrollIndicator: false }}
+          onClose={() => {
+            helper(navigation, true)
+          }}
+        >
+          <AddRoom />
         </Modalize>
       </SafeAreaView>
     );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Button, Alert, Dimensions } from 'react-native';
+import { Text, View, Button, Alert, Dimensions, LogBox } from 'react-native'; 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HouseRooms from './views/HouseRooms';
@@ -20,6 +20,8 @@ const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs();
 
 export default function App() {
   return (
