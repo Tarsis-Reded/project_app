@@ -55,7 +55,7 @@ export default StyleSheet.create({
     dropdown1DropdownStyle: { borderBottomLeftRadius: 12, borderBottomRightRadius: 12, borderTopEndRadius: 12, borderTopStartRadius: 12 }, //
     dropdown1RowStyle: { backgroundColor: '#EFEFEF', borderBottomColor: '#C5C5C5' }, // 
     dropdown1RowTxtStyle: { color: '#444', textAlign: 'center', fontFamily: 'Poppins_400Regular', fontSize: 16 }, // 
-    font: { fontFamily: 'Poppins_400Regular', fontSize: 18, paddingVertica: 6 },
+    font: { fontFamily: 'Poppins_400Regular', fontSize: 18, paddingVertical: 6 },
   
     dropdown2BtnStyle: { // botão principal
       width: '80%',

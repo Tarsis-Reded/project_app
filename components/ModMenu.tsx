@@ -29,12 +29,18 @@ export default function ModMenu(props) {
 
    return (
       <SafeAreaView style={{ paddingBottom: 10, paddingTop: inset.top + 5, ...styles.container, backgroundColor: 'transparent', flex: 1 }}>
-         <View style={{ paddingTop: inset.top, backgroundColor: '#2a2a2a', height: windowHeight, borderTopLeftRadius: 18 }}>
+         <View style={{ paddingTop: inset.top, backgroundColor: '#e5e5e5', height: windowHeight, borderTopLeftRadius: 18 }}>
             <View style={{ width: 190, justifyContent: 'flex-start', alignContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
-               <View style={{ height: 120 }}>
-                  <Image
-                     style={{ backgroundColor: 'white', height: 110, borderRadius: 54, width: 110, borderWidth: 2, borderColor: 'black', }}
-                     source={images.perfilPhoto} />
+               <View style={{ height: 150, width: 150, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
+                  <View style={{height: 130, backgroundColor: '#727272', borderRadius: 100, width: 130, justifyContent: 'center', alignContent: 'center' }}>
+                     <Image
+                        style={{ backgroundColor: 'white', height: 125, borderRadius: 62, width: 125, borderWidth: 1, borderColor: 'black', alignSelf: 'center' }}
+                        source={images.perfilPhoto} />
+
+                     <TouchableOpacity style={{ height: 33, width: 33, borderRadius: 20, backgroundColor: '#666666', alignSelf: 'flex-end', justifyContent: 'center', alignContent: 'center' }}>
+                        <Image source={images.ediPerfil} style={{ height: 23, width: 23, alignSelf: 'center' }} />
+                     </TouchableOpacity>
+                  </View>
                </View>
                <View style={{ alignContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
                   <Text style={{ fontFamily: 'Poppins_400Regular', color: 'black', fontSize: 16, fontWeight: '700' }}>
@@ -81,7 +87,7 @@ export default function ModMenu(props) {
                />
 
                <DrawerItem
-                  labelStyle={{color: '#ee5555'}}
+                  labelStyle={{ color: '#ee5555' }}
                   pressColor='red'
                   activeTintColor='black'
                   label={`LogOut`}
@@ -92,13 +98,13 @@ export default function ModMenu(props) {
                      // navigation.navigate('Login')
                   }}
                />
-                  <DrawerItem
-                     pressColor='red'
-                     activeTintColor='black'
-                     focused={option == 'Help'}
-                     label="Help"
-                     onPress={() => { setOption('Help') }}
-                  />
+               <DrawerItem
+                  pressColor='red'
+                  activeTintColor='black'
+                  focused={option == 'Help'}
+                  label="Help"
+                  onPress={() => { setOption('Help') }}
+               />
             </DrawerContentScrollView>
          </View>
 

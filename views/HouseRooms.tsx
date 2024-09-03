@@ -90,7 +90,8 @@ export default function HouseRooms({ navigation }) {
 
   useEffect(() => {
     let dataRooms = []
-    RoomRef.current.open();
+    // RoomRef.current.open();
+    navigation.openDrawer()
     for (const room of data.roomsHouse) {
       let roomInfo = {
         name: room.value, countDevices: devices.filter(element => element.partHome === room.room).length,
