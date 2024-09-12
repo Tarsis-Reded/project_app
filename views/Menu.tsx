@@ -85,7 +85,7 @@ export default function App(room) {
       let title = item.title;
       let ind = 0;
       switch (item.type) {
-        case 'socket':
+        case 'socket' :
           imagePath = item.on ? images.socket_on : images.socket_off
           break;
         case 'air':
